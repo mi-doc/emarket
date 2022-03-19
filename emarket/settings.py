@@ -152,7 +152,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-if not socket.gethostname() == 'mihail':
+if not socket.gethostname() == 'python-bored-tomato':
     DEBUG = False
     DATABASES = {
         'default': {
