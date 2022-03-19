@@ -248,6 +248,7 @@ SMALL SCREENS
 
     .product-item-name{
         min-height: unset;
+        font-size: 15px;
     }
 
     .specs{
@@ -301,8 +302,8 @@ SMALL SCREENS
         min-width: unset !important;
     }
 
-    .product-item-name{
-        min-height: unset !important;
+    .product-item-name h4{
+        font-size: 3vw !important;
     }
 
     .center-core img{
@@ -322,7 +323,7 @@ Product_item styles
 }
 
 .product-item{
-    height: 400px;
+    height: 474px;
     margin-bottom: 10px;
     background-color: white;
     border: 1px solid lightgrey;
@@ -351,7 +352,7 @@ Product_item styles
 
 .product-item-name{
     text-align: center;
-    min-height: 38px;
+    min-height: 60px;
 }
 
 .center-core{
