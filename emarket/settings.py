@@ -152,7 +152,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static"),
 )
 
-if not socket.gethostname() == 'mihail':
+""" if not socket.gethostname() == 'mihail':
     DEBUG = False
     DATABASES = {
         'default': {
@@ -163,7 +163,7 @@ if not socket.gethostname() == 'mihail':
             'HOST': 'localhost',
             'PORT': '',
         }
-    }
+    } """
 
 
 db_from_env = dj_database_url.config()
