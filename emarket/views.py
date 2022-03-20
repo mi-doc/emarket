@@ -2,6 +2,7 @@ from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views import View
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, FormMixin
 from django.views.generic.list import ListView
@@ -17,7 +18,11 @@ class MainView(ListView, FormMixin):
     form_class = FilterForm
 
 
-class FilteredProductsView(FormView):
+class FilteredProductsAndFilterView(View):
+    def post (self, request):
+        return FilteredProducts.as_view()(request)
+
+class FilteredProducts(FormView):
     template_name   = 'emarket/products_on_main_page.html'
     form_class      = FilterForm
     queryset        = Product.objects.all()
@@ -53,7 +58,9 @@ class FilteredProductsView(FormView):
         search = data['search']
         if search: prs = prs.filter(name__icontains=search)
 
-        return super().render_to_response({'product_list': prs})
+        res = super().render_to_response({'product_list': prs})
+    
+        return res
 
 
 class DeliveryView(TemplateView):

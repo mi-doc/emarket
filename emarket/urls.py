@@ -39,7 +39,7 @@ urlpatterns = [
     url(r'^orders/', include('orders.urls', namespace='orders')),
     url(r'^products/', include('products.urls', namespace='products')),
     url(r'^success/', views.SuccessView.as_view(), name='success'),
-    url(r'^filtered_products/', views.FilteredProductsView.as_view(), name='filtered_products'),
+    url(r'^filtered_products/', views.FilteredProductsAndFilterView.as_view(), name='filtered_products'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
