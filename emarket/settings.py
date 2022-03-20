@@ -153,7 +153,11 @@ STATICFILES_DIRS = (
 )
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 if not socket.gethostname() == 'python-bored-tomato':
+=======
+""" if not socket.gethostname() == 'mihail':
+>>>>>>> f6e09cb00734344dd7e135f94c31bd9f874206d8
 =======
 """ if not socket.gethostname() == 'mihail':
 >>>>>>> f6e09cb00734344dd7e135f94c31bd9f874206d8
