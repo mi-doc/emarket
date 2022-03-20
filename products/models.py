@@ -62,8 +62,13 @@ class Product(models.Model):
         return api_reverse("api:product-rud", kwargs={'pk': self.pk}, request=request)
 
     @classmethod
-    def get_distinct_values_from_field(cls, field):
-        values = list(cls.objects.all().values_list(field).order_by(field).distinct())
+    def get_distinct_values_from_field(cls, field, product_ids=None):
+
+        if product_ids:
+            values = list(cls.objects.filter(id__in=product_ids).values_list(field).order_by(field).distinct())
+        else:
+            values = list(cls.objects.all().values_list(field).order_by(field).distinct())
+       
         if (None,) in values:
             values.remove((None,))
         return values
