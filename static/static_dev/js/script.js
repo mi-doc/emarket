@@ -249,12 +249,43 @@ $(document).ready(function () {
             success: function(html){
               $("#product_items").html(html);
               updateAddToBasketButtons();
+              updateFilter();
             },
             error: function(data){
                 console.log('Fail to receive filtered products from server')
             }
         })
     }
+
+   
+    function updateFilter () {
+        var parameters = [
+            'os',
+            'diagonal',
+            'processor',
+            'ram'
+        ];
+        var products_data = JSON.parse($('#products_data').attr('data-json'))
+
+        parameters.forEach(function(param){
+            var param_field = $('#id_'+param+' li input');
+            var number_of_options = param_field.length;
+            for (let i = 0; i < number_of_options; i++) {
+                var value = param_field[i].value;
+
+                switch (param) {
+                    case 'ram': value = parseInt(value)
+                    case 'diagonal': value = parseFloat(value)
+                }
+
+                products_data[param].includes(value) ?
+                    param_field[i].enabled = 'True' :
+                    param_field[i].disabled = 'True'
+            }
+        })
+
+    }
+
 
     $('.filter-form').change(function (e) {
         e.preventDefault();

@@ -1,3 +1,4 @@
+import decimal
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
@@ -6,6 +7,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, FormMixin
 from django.views.generic.list import ListView
 from django.urls import reverse
+import json
 
 from products.models import Product
 from .forms import ContactForm, FilterForm
@@ -56,11 +58,16 @@ class FilteredProductsView(FormView):
         parameters = ['os', 'diagonal', 'processor', 'ram']
         products_data = {}
         for param in parameters:
-            products_data[param] = [val[0] for val in prs.values_list(param).distinct()]
+            values = []
+            for val in prs.values_list(param):
+                val = val[0]
+                if type(val) is decimal.Decimal:
+                    val = float(val)
+                values.append(val)
+            products_data[param] = values
+        products_data = json.dumps(products_data)
 
-        print(products_data)
-
-        return super().render_to_response({'product_list': prs})
+        return super().render_to_response({'product_list': prs, 'products_data': products_data})
 
 
 class DeliveryView(TemplateView):
