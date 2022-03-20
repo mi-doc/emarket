@@ -53,6 +53,13 @@ class FilteredProductsView(FormView):
         search = data['search']
         if search: prs = prs.filter(name__icontains=search)
 
+        parameters = ['os', 'diagonal', 'processor', 'ram']
+        products_data = {}
+        for param in parameters:
+            products_data[param] = [val[0] for val in prs.values_list(param).distinct()]
+
+        print(products_data)
+
         return super().render_to_response({'product_list': prs})
 
 
