@@ -465,6 +465,11 @@ Filter
     display: inline;
 }
 
+.filter-disabled-input {
+    color: rgba(211, 211, 211, 0.904);
+}
+
+
 
 /*
 Delivery, contacts, profile

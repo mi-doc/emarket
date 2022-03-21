@@ -270,7 +270,6 @@ $(document).ready(function () {
         parameters.forEach(function(param){
             $('#id_'+param+' li input').each(function() {
                 var value = $(this).attr('value');
-                console.log(value)
                 switch (param) {
                     case 'ram': value = parseInt(value)
                     case 'diagonal': value = parseFloat(value)
@@ -278,15 +277,13 @@ $(document).ready(function () {
                 
                 if (products_data[param].includes(value)) {
                     $(this).removeAttr('disabled');
+                    $(this).parent().removeClass('filter-disabled-input');
                 } else {
                     $(this).attr('disabled', 'True');
+                    $(this).parent().addClass('filter-disabled-input');
                 }
-                // $('#id_processor li input')[2].disabled
-            })
-            
-            
 
-            
+            })           
         })
 
     }
