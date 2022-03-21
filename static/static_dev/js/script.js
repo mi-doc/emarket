@@ -268,20 +268,25 @@ $(document).ready(function () {
         var products_data = JSON.parse($('#products_data').attr('data-json'))
 
         parameters.forEach(function(param){
-            var param_field = $('#id_'+param+' li input');
-            var number_of_options = param_field.length;
-            for (let i = 0; i < number_of_options; i++) {
-                var value = param_field[i].value;
-
+            $('#id_'+param+' li input').each(function() {
+                var value = $(this).attr('value');
+                console.log(value)
                 switch (param) {
                     case 'ram': value = parseInt(value)
                     case 'diagonal': value = parseFloat(value)
                 }
+                
+                if (products_data[param].includes(value)) {
+                    $(this).removeAttr('disabled');
+                } else {
+                    $(this).attr('disabled', 'True');
+                }
+                // $('#id_processor li input')[2].disabled
+            })
+            
+            
 
-                products_data[param].includes(value) ?
-                    param_field[i].enabled = 'True' :
-                    param_field[i].disabled = 'True'
-            }
+            
         })
 
     }
