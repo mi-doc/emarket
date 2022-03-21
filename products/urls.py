@@ -18,6 +18,8 @@ from django.contrib import admin
 
 from . import views
 
+app_name = 'products'
+
 urlpatterns = [
     url(r'^(?P<slug>[\w-]+)/$', views.ProductDetailView.as_view(), name='product'),
 ]

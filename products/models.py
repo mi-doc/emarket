@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models.signals import pre_save
 from django.db.models import Max, Min
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from rest_framework.reverse import reverse as api_reverse
 from imagekit.models import ImageSpecField
@@ -110,7 +110,7 @@ pre_save.connect(pre_save_product_receiver, sender=Product)
 
 class ProductImage(models.Model):
     image       = models.ImageField(upload_to='products_images/')
-    product     = models.ForeignKey(Product, blank=True, null=True, default=None)
+    product     = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
     is_active   = models.BooleanField(default=True)
     is_main     = models.BooleanField(default=False)
     created     = models.DateTimeField(auto_now_add=True, auto_now=False)

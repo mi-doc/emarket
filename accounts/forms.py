@@ -5,7 +5,7 @@ from django.contrib.auth import (
     login,
     logout,
 )
-from django.forms.extras.widgets import SelectDateWidget
+
 
 
 from .models import Profile
@@ -48,7 +48,7 @@ class UserRegisterForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    birth_date = forms.DateField(widget=SelectDateWidget(years=range(1920, 2018, 1)))
+    birth_date = forms.DateField()
     class Meta:
         model = Profile
         exclude = ['user']

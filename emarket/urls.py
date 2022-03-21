@@ -25,6 +25,7 @@ from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 import api
 
+app_name = 'emarket'
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='main/')),

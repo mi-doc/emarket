@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import url
 from . import views
 
+app_name = 'orders'
+
 urlpatterns = [
     # url(r'^update_basket_list/$', views.update_basket_list, name="basket_list"),
     url(r'^update_basket_list/$', views.UpdateBasketList.as_view(), name="basket_list"),

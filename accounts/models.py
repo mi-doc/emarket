@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 User = get_user_model()
 
@@ -11,7 +11,7 @@ GENDER_CHOICES = (
 
 
 class Profile(models.Model):
-    user        = models.OneToOneField(User)
+    user        = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name  = models.CharField(max_length=64, null=True, default=None)
     second_name = models.CharField(max_length=64, null=True, default=None)
     gender      = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True, default='M')

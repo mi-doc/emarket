@@ -9,7 +9,7 @@ from django.views.generic.base import RedirectView, TemplateView
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .forms import UserLoginForm, UserRegisterForm, EditProfileForm
 from .models import Profile
