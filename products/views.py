@@ -33,10 +33,12 @@ class ProductDetailView(FormMixin, DetailView):
             return self.form_invalid(form)
 
     def form_valid(self, form, *args, **kwargs):
-        if not self.request.user.is_authenticated():
+        if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('accounts:login'))
 
-        c_type = form.cleaned_data.get("content_type").lower()
+        c_type = form.cleaned_data.get("content_type")
+        import pdb
+        pdb.set_trace()
         content_type = ContentType.objects.get(model=c_type)
         object_id = form.cleaned_data.get('object_id')
         content = form.cleaned_data.get("content")

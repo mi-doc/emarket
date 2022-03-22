@@ -175,7 +175,7 @@ def get_user_or_session_key(user, session_key):
     Returns user if user is not none and not anonymous.
     Otherwise returns session key.
     """
-    if user and not user.is_anonymous():
+    if user and not user.is_anonymous:
         obj = {'user': user}
     else:
         obj = {'session_key': session_key}

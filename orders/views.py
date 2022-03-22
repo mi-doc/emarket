@@ -150,7 +150,7 @@ class CheckoutView(CreateView):
 
     def form_valid(self, form, *args, **kwargs):
         user = self.request.user
-        if user.is_authenticated():
+        if user.is_authenticated:
             form.instance.user = self.request.user
 
         # Assigning a status "1" (Waiting for paimment) to order.

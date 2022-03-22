@@ -12,7 +12,6 @@ from products.models import Product
 
 User = get_user_model()
 
-
 class UpdateBasketListViewTestCase(TestCase):
 
     def setUp(self):
@@ -41,7 +40,8 @@ class UpdateBasketListViewTestCase(TestCase):
             ProductInBasket,
             user=self.user2,
             product=self.pr2,
-        )
+                )
+
 
     def test_view_url_exists_and_accessible(self):
         response = self.client.get('/orders/update_basket_list/')
