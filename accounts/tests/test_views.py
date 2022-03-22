@@ -45,13 +45,6 @@ class LoginViewTestCase(TestCase):
         response = self.client.get(reverse('main'))
         self.assertTrue(response.context['user'].is_authenticated)
 
-    # def test_registered_user_with_next_argument(self):
-    #     data = {'username': 'testuser', 'password': 'somepass', 'next': 'iamfromhere'}
-    #     response = self.client.post(reverse('accounts:login'), data)
-    #     self.assertRedirects(response, 'iamfromhere', status_code=302, target_status_code=302)
-    #     response = self.client.get(reverse('main'))
-    #     self.assertTrue(response.context['user'].is_authenticated())
-
     def test_not_registered_user(self):
         data = {'username': 'testusernotregistered', 'password': 'somepass'}
         response = self.client.post(reverse('accounts:login'), data)
