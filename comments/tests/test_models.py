@@ -23,8 +23,8 @@ class CommentTestCase(TestCase):
         # self.product = product
 
         c_type = product.get_content_type
-        c_type = str(c_type).lower()
-        content_type = ContentType.objects.get(model=c_type)
+       
+        content_type = ContentType.objects.get(model=c_type.model)
         obj_id = product.id 
 
         parent_comment = Comment.objects.create(

@@ -37,13 +37,13 @@ class LoginViewTestCase(TestCase):
 
     def test_registered_user(self):
         response = self.client.get(reverse('main'))
-        self.assertFalse(response.context['user'].is_authenticated())
+        self.assertFalse(response.context['user'].is_authenticated)
 
         data = {'username': 'testuser', 'password': 'somepass'}
         response = self.client.post(reverse('accounts:login'), data)
         self.assertRedirects(response, '/', status_code=302, target_status_code=302)
         response = self.client.get(reverse('main'))
-        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertTrue(response.context['user'].is_authenticated)
 
     # def test_registered_user_with_next_argument(self):
     #     data = {'username': 'testuser', 'password': 'somepass', 'next': 'iamfromhere'}
@@ -123,11 +123,11 @@ class LogoutViewTestCase(TestCase):
         test_user = User.objects.create_user(username='testuser', password='somepass')
         self.client.login(username='testuser', password='somepass')
         response = self.client.get(reverse('main'))
-        self.assertTrue(response.context['user'].is_authenticated())
+        self.assertTrue(response.context['user'].is_authenticated)
 
         response = self.client.get(reverse('accounts:logout'))
         response = self.client.get(reverse('main'))
-        self.assertFalse(response.context['user'].is_authenticated())
+        self.assertFalse(response.context['user'].is_authenticated)
 
     def test_redirect(self):
         response = self.client.get(reverse('accounts:logout'))

@@ -106,7 +106,7 @@ class ProfileView(TemplateView):
         return context
 
     def get(self, request, *args, **kwargs):
-        if kwargs['username']:
+        if 'username' in kwargs.keys():
             try:
                 self.user = User.objects.get(username__iexact=kwargs['username'])
             except:
@@ -114,6 +114,6 @@ class ProfileView(TemplateView):
         else:
             self.user = self.request.user
 
-        if not self.user.is_authenticated():
+        if not self.user.is_authenticated:
             return redirect(reverse('main'))
         return super().get(request, *args, **kwargs)

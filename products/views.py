@@ -36,10 +36,10 @@ class ProductDetailView(FormMixin, DetailView):
         if not self.request.user.is_authenticated:
             return HttpResponseRedirect(reverse('accounts:login'))
 
-        c_type = form.cleaned_data.get("content_type")
-        import pdb
-        pdb.set_trace()
+        c_type = form.cleaned_data.get("content_type").split()[-1].lower()
+        
         content_type = ContentType.objects.get(model=c_type)
+
         object_id = form.cleaned_data.get('object_id')
         content = form.cleaned_data.get("content")
         try:
