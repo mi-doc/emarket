@@ -54,6 +54,8 @@ db.sqlite3
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
+data/
+
 # JIRA plugin
 atlassian-ide-plugin.xml
 

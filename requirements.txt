@@ -1,7 +1,7 @@
 asgiref==3.2.3
 coverage==4.5.1
 dj-database-url==0.4.2
-Django>
+Django
 django-appconf==1.0.2
 django-avatar
 django-cors-headers==3.2.1
@@ -12,9 +12,9 @@ djangorestframework-jwt
 Faker==0.8.8
 gunicorn==19.7.1
 mixer==6.0.1
-pilkit==2.0
-Pillow>=8
-psycopg2==2.7.3.2
+Pillow
+pilkit
+psycopg2
 PyJWT==1.5.3
 python-dateutil==2.7.3
 pytz==2017.3
