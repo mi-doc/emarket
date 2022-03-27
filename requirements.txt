@@ -2,7 +2,7 @@ asgiref==3.2.3
 backports.zoneinfo==0.2.1
 coverage==4.5.1
 dj-database-url==0.4.2
-Django==3.0.14
+Django==3.1.14
 django-appconf==1.0.2
 django-avatar==5.0.0
 django-cors-headers==3.11.0
