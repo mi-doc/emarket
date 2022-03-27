@@ -1,11 +1,11 @@
 import datetime
 
-from django.contrib.auth import get_user_model, login
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 from mixer.backend.django import mixer
-
 from orders.models import Order
+
 from ..forms import UserLoginForm, UserRegisterForm, EditProfileForm
 from ..models import Profile
 
@@ -181,11 +181,10 @@ class EditProfileViewTestCase(TestCase):
         self.assertEqual(profile.address, 'Moskwa ul. Sosnovaya')
 
     def test_post_invalid_data(self):
-        data = {'first_name': 'Dan'}
+        data = {'birth_date': 1}
         response = self.client.post(reverse('accounts:edit-profile'), data)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'accounts/form.html')
-        self.assertEqual(response.context['form'].cleaned_data['first_name'], 'Dan')
 
 
 class ProfileViewTestCase(TestCase):
@@ -225,7 +224,7 @@ class ProfileViewTestCase(TestCase):
         profile2 = Profile.objects.get(user__username='testuser2')
 
         response = self.client.get(reverse('accounts:profile',
-                                   kwargs={'username': 'testuser2'}))
+                                           kwargs={'username': 'testuser2'}))
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(response.context['profile'], profile)
         self.assertEqual(response.context['profile'], profile2)
@@ -236,4 +235,3 @@ class ProfileViewTestCase(TestCase):
         response = self.client.get(reverse('accounts:profile'))
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse("main"))
-

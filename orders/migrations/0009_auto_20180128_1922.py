@@ -6,7 +6,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('orders', '0008_auto_20180117_1640'),
     ]
@@ -14,6 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='productinbasket',
-            options={'ordering': ('created',), 'verbose_name': 'Product in basket', 'verbose_name_plural': 'Products in basket'},
+            options={'ordering': ('created',), 'verbose_name': 'Product in basket',
+                     'verbose_name_plural': 'Products in basket'},
         ),
     ]

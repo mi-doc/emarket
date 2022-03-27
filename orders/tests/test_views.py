@@ -1,14 +1,13 @@
-from django.test import TestCase
+from accounts.models import Profile
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.conf import settings
+from django.test import TestCase
 from django.urls import reverse
 from mixer.backend.django import mixer
-import json
-
-from ..models import Order, Status, ProductInOrder, ProductInBasket
-from accounts.models import Profile
 from products.models import Product
+
+from ..models import Order, ProductInOrder, ProductInBasket
 
 User = get_user_model()
 

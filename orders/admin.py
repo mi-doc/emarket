@@ -1,12 +1,11 @@
 from django.contrib import admin
-from .models import *
 
+from .models import *
 
 
 class ProductInOrderInline(admin.TabularInline):
     model = ProductInOrder
     extra = 0
-
 
 
 class OrderAdmin(admin.ModelAdmin):
@@ -16,8 +15,8 @@ class OrderAdmin(admin.ModelAdmin):
     class Meta:
         model = Order
 
-admin.site.register(Order, OrderAdmin)
 
+admin.site.register(Order, OrderAdmin)
 
 
 class StatusAdmin(admin.ModelAdmin):
@@ -26,8 +25,8 @@ class StatusAdmin(admin.ModelAdmin):
     class Meta:
         model = Status
 
-admin.site.register(Status, StatusAdmin)
 
+admin.site.register(Status, StatusAdmin)
 
 
 class ProductInOrderAdmin(admin.ModelAdmin):
@@ -36,8 +35,8 @@ class ProductInOrderAdmin(admin.ModelAdmin):
     class Meta:
         model = ProductInOrder
 
-admin.site.register(ProductInOrder, ProductInOrderAdmin)
 
+admin.site.register(ProductInOrder, ProductInOrderAdmin)
 
 
 class ProductInBasketAdmin(admin.ModelAdmin):
@@ -45,5 +44,6 @@ class ProductInBasketAdmin(admin.ModelAdmin):
 
     class Meta:
         model = ProductInBasket
+
 
 admin.site.register(ProductInBasket, ProductInBasketAdmin)

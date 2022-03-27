@@ -12,12 +12,11 @@ $(document).ready(function () {
     ];
 
     menus.forEach(function (menu) {
-        if (window.location.href.indexOf(menu) !== -1){
+        if (window.location.href.indexOf(menu) !== -1) {
             $('.active').removeClass('active');
             $('#' + menu).addClass('active');
         }
     });
-
 
 
     // Changing button in product_item div on main page according to
@@ -83,8 +82,9 @@ $(document).ready(function () {
 
     // Short appearance of basket when product added
     var basket_appearance_timerId = 0;
+
     function navbarBasketAppearance() {
-        $('.basket').show(duration=400);
+        $('.basket').show(duration = 400);
         clearTimeout(basket_appearance_timerId)
         basket_appearance_timerId = setTimeout(function () {
             $('.basket').hide(duration = 400);
@@ -97,7 +97,7 @@ $(document).ready(function () {
     function updateNavbarBasket(html) {
         $('.basket-products-list').html(html);
         var hidden_data = $('#hidden_basket_data');
-        $('#basket_total_nmb').text('('+hidden_data.data('total-nmb')+')');
+        $('#basket_total_nmb').text('(' + hidden_data.data('total-nmb') + ')');
         $('.total_price').text(hidden_data.data('total-price'));
     }
 
@@ -126,26 +126,28 @@ $(document).ready(function () {
 
             if (window.innerWidth < 800) {                // We don't need this on mobile
                 return;
-            };
+            }
+
 
             if (basket_appearance_timerId != 0) {           // Basket list might be already showed if user
                 clearTimeout(basket_appearance_timerId);    // added a product to basket a moment before.
                 basket_appearance_timerId = 0;              // In that case basket list appears and
             } else {                                        // a timer started to hide basket list after a second.
                 $(".basket").show();
-            };
+            }
+
         })
         .mouseout(function () {
             $(".basket").hide();
         });
-    
+
 
     // Adding to basket list on product_detail.html
     $('#form_buying_product').on('submit', function (e) {
         e.preventDefault();
 
         var submit_btn = $('#submit-btn');
-        if (submit_btn.hasClass('btn-go-to-checkout')){
+        if (submit_btn.hasClass('btn-go-to-checkout')) {
             // Because if product is already in basket
             // and button class have changed to "btn-go-to-basket",
             // we don't need to add this product to basket
@@ -167,7 +169,7 @@ $(document).ready(function () {
         updateBasketList('POST', data);
     });
 
-    
+
     // Appearance of reply to comment form on prodcut page
     $('.comment-reply-btn').click(function (e) {
         e.preventDefault();
@@ -175,24 +177,24 @@ $(document).ready(function () {
         var comment_form = $(parent).find('.comment-reply-form')
         comment_form.fadeToggle();
     })
-    
+
 
     // Deleting from basket list both on navbar and checkout page
-    function removeFromNavbarBasketList (product_id) {
+    function removeFromNavbarBasketList(product_id) {
         var data = {};
         data.remove_product_id = product_id;
         data.csrfmiddlewaretoken = document.querySelector('[name="csrfmiddlewaretoken"]').value
         updateBasketList('POST', data);
     }
 
-    function removeFromCheckoutBasketList (product_id) {
-        $("[data-id=" + product_id + "]").hide(duration=300);
+    function removeFromCheckoutBasketList(product_id) {
+        $("[data-id=" + product_id + "]").hide(duration = 300);
     }
 
     $(document)
         .on('click', '.delete-from-basket', function (e) {
             var product_id = $(this).attr('data-id');
-            $(e.target).closest('.product-in-basket').hide(duration=300, complete=function () {
+            $(e.target).closest('.product-in-basket').hide(duration = 300, complete = function () {
                 removeFromNavbarBasketList(product_id);
             })
             // var product_id = $(this).attr('data-id');
@@ -208,7 +210,7 @@ $(document).ready(function () {
         })
         .on('change', '.num-products-input', function (event) {
             var product_id = $(event.target).attr('data-id');
-            var product_to_change = $('tr[data-id=' +product_id + ']'); // product in table row on checkout page
+            var product_to_change = $('tr[data-id=' + product_id + ']'); // product in table row on checkout page
             var nmb = $(event.target).val();
 
             // If product nmb changed through navbar basket list while user on checkout page,
@@ -216,7 +218,7 @@ $(document).ready(function () {
             product_to_change.find('.num-products-input').val(nmb);
 
             var data = {};
-            data["csrfmiddlewaretoken"] =  $('.form-change-product').find('[name="csrfmiddlewaretoken"]').val();
+            data["csrfmiddlewaretoken"] = $('.form-change-product').find('[name="csrfmiddlewaretoken"]').val();
             data.nmb = nmb;
             data.product_id = product_id;
             $.ajax({
@@ -237,7 +239,7 @@ $(document).ready(function () {
 
     // Filter logic:
     // renewing product items on main page when filter used
-    function filterProduct (form) {
+    function filterProduct(form) {
         var filteredProductsUrl = "/filtered_products/";
         if (form.serialize().length == 0) {
             return;
@@ -246,19 +248,19 @@ $(document).ready(function () {
             method: "POST",
             data: form.serialize(),
             url: filteredProductsUrl,
-            success: function(html){
-              $("#product_items").html(html);
-              updateAddToBasketButtons();
-              updateFilter();
+            success: function (html) {
+                $("#product_items").html(html);
+                updateAddToBasketButtons();
+                updateFilter();
             },
-            error: function(data){
+            error: function (data) {
                 console.log('Fail to receive filtered products from server')
             }
         })
     }
 
-   
-    function updateFilter () {
+
+    function updateFilter() {
         var parameters = [
             'os',
             'diagonal',
@@ -267,14 +269,16 @@ $(document).ready(function () {
         ];
         var products_data = JSON.parse($('#products_data').attr('data-json'))
 
-        parameters.forEach(function(param){
-            $('#id_'+param+' li input').each(function() {
+        parameters.forEach(function (param) {
+            $('#id_' + param + ' li input').each(function () {
                 var value = $(this).attr('value');
                 switch (param) {
-                    case 'ram': value = parseInt(value)
-                    case 'diagonal': value = parseFloat(value)
+                    case 'ram':
+                        value = parseInt(value)
+                    case 'diagonal':
+                        value = parseFloat(value)
                 }
-                
+
                 if (products_data[param].includes(value)) {
                     $(this).removeAttr('disabled');
                     $(this).parent().removeClass('filter-disabled-input');
@@ -283,7 +287,7 @@ $(document).ready(function () {
                     $(this).parent().addClass('filter-disabled-input');
                 }
 
-            })           
+            })
         })
 
     }

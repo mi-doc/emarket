@@ -1,19 +1,18 @@
+from comments.forms import CommentForm
+from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import FormMixin
 
-from comments.forms import CommentForm
-from comments.models import Comment
 from .models import Product
 
 
 class ProductDetailView(FormMixin, DetailView):
-
-    template_name   = 'products/product_detail.html'
-    form_class      = CommentForm
-    model           = Product
+    template_name = 'products/product_detail.html'
+    form_class = CommentForm
+    model = Product
 
     def get_initial(self):
         initial = super().get_initial()
@@ -37,7 +36,7 @@ class ProductDetailView(FormMixin, DetailView):
             return HttpResponseRedirect(reverse('accounts:login'))
 
         c_type = form.cleaned_data.get("content_type").split()[-1].lower()
-        
+
         content_type = ContentType.objects.get(model=c_type)
 
         object_id = form.cleaned_data.get('object_id')

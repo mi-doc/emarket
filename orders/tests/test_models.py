@@ -1,9 +1,9 @@
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from mixer.backend.django import mixer
+from products.models import Product
 
 from ..models import Order, Status, ProductInOrder, ProductInBasket
-from products.models import Product
 
 User = get_user_model()
 
@@ -124,7 +124,5 @@ class ProductInBasketTestCase(TestCase):
         self.assertEqual(prod_in_basket.price_per_item, self.prod1.price)
 
         prod_in_basket = mixer.blend(ProductInBasket, product=self.prod3, nmb=4)
-        self.assertEqual(prod_in_basket.total_price, 10560*4,
+        self.assertEqual(prod_in_basket.total_price, 10560 * 4,
                          msg='Total price should consider discount')
-
-

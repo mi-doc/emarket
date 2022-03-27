@@ -1,4 +1,5 @@
 import os
+
 from django.test import TestCase
 from mixer.backend.django import mixer
 
@@ -65,7 +66,3 @@ class ProductImageTestCase(TestCase):
         image_not_main = ProductImage.objects.create(is_main=False)
         id = image_not_main.id
         self.assertEqual(str(id), str(image_not_main))
-
-
-
-

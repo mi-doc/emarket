@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from utils.main import disable_for_loaddata
+from django.db import models
 from products.models import Product, ProductImage
+from utils.main import disable_for_loaddata
 
 User = get_user_model()
 

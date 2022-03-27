@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.test import TestCase
-from mixer.backend.django import mixer
 
-from ..models import Profile
 from ..forms import UserLoginForm, UserRegisterForm
 
 User = get_user_model()
@@ -59,4 +57,3 @@ class UserRegisterFormTestCase(TestCase):
         }
         form = UserRegisterForm(data=data)
         self.assertFalse(form.is_valid())
-

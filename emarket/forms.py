@@ -3,7 +3,6 @@ from products.models import Product
 
 
 class ContactForm(forms.Form):
-
     subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
     sender = forms.EmailField(widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
@@ -36,12 +35,12 @@ class FilterForm(forms.Form):
         for field in self.fields.keys():
             self.fields[field].required = False
 
-    os          = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
-    diagonal    = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
-    processor   = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
-    ram         = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
+    os = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
+    diagonal = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
+    processor = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
+    ram = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
 
-    memory_min  = forms.IntegerField(
+    memory_min = forms.IntegerField(
         initial=Product.get_min_memory,
         max_value=9999,
         min_value=0
@@ -68,4 +67,3 @@ class FilterForm(forms.Form):
                                                                    'oninput': 'printprice("maxprice")'}))
 
     search = forms.CharField(max_length=200, widget=forms.HiddenInput())
-

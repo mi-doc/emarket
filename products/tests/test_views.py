@@ -1,11 +1,10 @@
-from django.db.models import Q
-from django.test import TestCase
+from comments.models import Comment
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.test import TestCase
 from django.urls import reverse
 
 from ..models import Product
-from comments.models import Comment
 
 User = get_user_model()
 
@@ -28,7 +27,7 @@ class CommentTestCase(TestCase):
         obj_id = product.id
 
         parent_comment = Comment.objects.create(
-            user = user_obj,
+            user=user_obj,
             content_type=content_type,
             object_id=obj_id,
             content="Parent comment content",
@@ -37,7 +36,7 @@ class CommentTestCase(TestCase):
         self.parent_comment = parent_comment
 
         child_comment = Comment.objects.create(
-            user = user_obj,
+            user=user_obj,
             content_type=content_type,
             object_id=obj_id,
             content="Child comment content",

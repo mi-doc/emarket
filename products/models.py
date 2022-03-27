@@ -1,15 +1,14 @@
-from django.db import models
-from django.db.models.signals import pre_save
-from django.db.models import Max, Min
+from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
+from django.db import models
+from django.db.models import Max, Min
+from django.db.models.signals import pre_save
 from django.urls import reverse
-
-from rest_framework.reverse import reverse as api_reverse
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
+from rest_framework.reverse import reverse as api_reverse
 
 from .utils import unique_slug_generator
-from comments.models import Comment
 
 
 class Product(models.Model):

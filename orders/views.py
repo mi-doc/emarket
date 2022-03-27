@@ -1,14 +1,11 @@
-from django.contrib.auth.models import User
 from django.core import mail
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView, CreateView
+from django.http import HttpResponse
 from django.urls import reverse
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 
-from accounts.models import Profile
-from .models import Status, Order, ProductInBasket, ProductInOrder
 from .forms import OrderForm
+from .models import Order, ProductInBasket, ProductInOrder
 
 
 class UpdateBasketList(TemplateView):

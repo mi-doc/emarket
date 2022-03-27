@@ -3,7 +3,6 @@ from orders.models import Order
 
 
 class OrderForm(forms.ModelForm):
-
     class Meta:
         model = Order
         fields = [
@@ -32,5 +31,3 @@ class OrderForm(forms.ModelForm):
             'customer_address': 'Address',
             'comments': 'Comments to order'
         }
-
-
