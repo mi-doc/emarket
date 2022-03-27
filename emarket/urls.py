@@ -28,7 +28,7 @@ import api
 app_name = 'emarket'
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(url='main/')),
+    url(r'^$', RedirectView.as_view(url='main/'), name='main'),
     url(r'^accounts/', include("accounts.urls", namespace='accounts')),
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include('api.urls', namespace='api')),

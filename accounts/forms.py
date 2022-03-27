@@ -48,7 +48,14 @@ class UserRegisterForm(forms.ModelForm):
 
 
 class EditProfileForm(forms.ModelForm):
-    birth_date = forms.DateField()
+
+    
+    def __init__(self, *args, **kwargs):
+        super(forms.ModelForm, self).__init__(*args, **kwargs)
+        for field in self.fields.keys():
+            self.fields[field].required = False
+    
     class Meta:
         model = Profile
         exclude = ['user']
+
