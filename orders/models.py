@@ -30,7 +30,7 @@ class Order(models.Model):
     customer_phone = models.CharField(max_length=48, null=True, default=None)
     customer_address = models.CharField(blank=True, null=True, max_length=128, default=None)
     comments = models.TextField(blank=True, default=None)
-    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, blank=True, null=True, default=None, on_delete=models.CASCADE)
     total_price = models.IntegerField(default=0)
 
     created = models.DateTimeField(auto_now_add=True, auto_now=False)

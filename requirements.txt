@@ -11,9 +11,9 @@ django-imagekit==4.0.2
 django-utils-six==2.0
 djangorestframework==3.13.1
 djangorestframework-jwt==1.11.0
-Faker==0.8.8
+Faker==12.0.1
 gunicorn==19.7.1
-mixer==6.0.1
+mixer==7.2.2
 pilkit==2.0
 Pillow==9.0.1
 psycopg==3.0.10

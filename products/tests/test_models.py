@@ -34,8 +34,8 @@ class ProductTestCase(TestCase):
 
     def test_get_main_image_url(self):
         product = Product.objects.first()
-        image_main = ProductImage.objects.create(product=product, is_main=True, image='/urlmy/new/')
-        image_not_main = ProductImage.objects.create(product=product, is_main=False, image='/urlmy/oddy/')
+        image_main = mixer.blend(ProductImage, product=product, is_main=True)
+        image_not_main = mixer.blend(ProductImage, product=product, is_main=False)
 
         self.assertEqual(
             product.get_main_img_url(),
@@ -45,9 +45,6 @@ class ProductTestCase(TestCase):
             product.get_main_img_url(),
             image_not_main.image.url
         )
-
-        image_main.delete()
-        image_not_main.delete()
 
     def test_get_absolute_url(self):
         absolute_url = '/products/iphonex/'
