@@ -1,16 +1,13 @@
+from django.contrib.auth import get_user_model
+from products.models import Product
 from rest_framework import status
+from rest_framework.reverse import reverse as api_reverse
 from rest_framework.test import APITestCase
 from rest_framework_jwt.settings import api_settings
-from django.contrib.auth import get_user_model
-from rest_framework.reverse import reverse as api_reverse
-
-from products.models import Product
-
 
 payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-encode_handler  = api_settings.JWT_ENCODE_HANDLER
+encode_handler = api_settings.JWT_ENCODE_HANDLER
 User = get_user_model()
-
 
 
 class ProductAPITestCase(APITestCase):
@@ -19,9 +16,9 @@ class ProductAPITestCase(APITestCase):
         user_obj.set_password("somepass")
         user_obj.save()
         product = Product.objects.create(
-                name='ZTE',
-                price=22000
-                )
+            name='ZTE',
+            price=22000
+        )
 
     def test_single_user(self):
         user_count = User.objects.count()
@@ -41,7 +38,7 @@ class ProductAPITestCase(APITestCase):
         response = self.client.get(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        url = api_reverse("api:product-rud", kwargs=({'pk':1}))
+        url = api_reverse("api:product-rud", kwargs=({'pk': 1}))
         response = self.client.get(url, data, format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -105,7 +102,7 @@ class ProductAPITestCase(APITestCase):
         token_rsp = encode_handler(payload)
         self.client.credentials(HTTP_AUTHORIZATION='JWT ' + token_rsp)  # JWT <token>
         response = self.client.put(url, data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN) # Because is_staff == False
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)  # Because is_staff == False
 
     def test_update_product_with_staff_user(self):
         product = Product.objects.first()

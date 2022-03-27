@@ -1,10 +1,9 @@
-from rest_framework import serializers
-
 from products.models import Product
+from rest_framework import serializers
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    #url         = serializers.SerializerMethodField(read_only=True)
+    # url         = serializers.SerializerMethodField(read_only=True)
     class Meta:
         model = Product
         fields = (

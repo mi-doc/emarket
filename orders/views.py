@@ -1,14 +1,11 @@
-from django.contrib.auth.models import User
 from django.core import mail
-from django.http import JsonResponse, HttpResponse
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
-from django.views.generic.edit import FormView, CreateView
+from django.http import HttpResponse
 from django.urls import reverse
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
 
-from accounts.models import Profile
-from .models import Status, Order, ProductInBasket, ProductInOrder
 from .forms import OrderForm
+from .models import Order, ProductInBasket, ProductInOrder
 
 
 class UpdateBasketList(TemplateView):
@@ -111,10 +108,10 @@ class CheckoutView(CreateView):
     Order could be assigned to authenticated user as well as to a not authenticated one.
     """
 
-    title           = 'Order'
-    model           = Order
-    form_class      = OrderForm
-    template_name   = 'orders/checkout.html'
+    title = 'Order'
+    model = Order
+    form_class = OrderForm
+    template_name = 'orders/checkout.html'
 
     def get_initial(self):
         """
@@ -128,9 +125,9 @@ class CheckoutView(CreateView):
         except:
             return initial
 
-        initial['customer_name']    = profile.get_full_name()
-        initial['customer_phone']   = profile.phone
-        initial['customer_email']   = self.request.user.email
+        initial['customer_name'] = profile.get_full_name()
+        initial['customer_phone'] = profile.phone
+        initial['customer_email'] = self.request.user.email
         initial['customer_address'] = profile.address
         return initial
 
@@ -154,7 +151,7 @@ class CheckoutView(CreateView):
             form.instance.user = self.request.user
 
         # Assigning a status "1" (Waiting for paimment) to order.
-        form.instance.status_id = 1
+        # form.instance.status_id = 1
         # With this line Order instance is created
         response = super().form_valid(form)
         order = self.object

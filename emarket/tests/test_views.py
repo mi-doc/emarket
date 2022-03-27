@@ -1,10 +1,11 @@
+import random
+
 from django.core import mail
 from django.test import TestCase
 from django.urls import reverse
 from mixer.backend.django import mixer
-import random
-
 from products.models import Product
+
 from ..forms import ContactForm
 
 
@@ -14,7 +15,7 @@ def generate_devices(self):
     are faked and some randomly choiced from a list.
     """
     self.num_of_devices = 70
-    fields = [                    # These fields we want to be FAKED by mixer
+    fields = [  # These fields we want to be FAKED by mixer
         'short_description',
         'screen_resolution',
         'main_camera',
@@ -24,13 +25,13 @@ def generate_devices(self):
     kwargs = {field: mixer.FAKE for field in fields}
     mixer.cycle(self.num_of_devices).blend(Product,
                                            name=lambda: random.choice([
-                                              'apple iphone',
+                                               'apple iphone',
                                                'iphone',
-                                              'samsung',
-                                              'samsung note'
-                                              'huawei',
-                                              'oneplus',
-                                              'zte'
+                                               'samsung',
+                                               'samsung note'
+                                               'huawei',
+                                               'oneplus',
+                                               'zte'
                                            ]),
                                            processor=lambda: random.choice([
                                                'A8',
@@ -97,7 +98,7 @@ class FilteredProductsTestCase(TestCase):
             'os': 'android',
             'memory_max': 100,
             'memory_min': 20,
-            'ram': [2,4]
+            'ram': [2, 4]
         }
 
         response = self.client.post(reverse('filtered_products'), data=data)
@@ -107,8 +108,8 @@ class FilteredProductsTestCase(TestCase):
             self.assertNotEqual(pr.os, 'ios')
             self.assertGreaterEqual(pr.built_in_memory, data['memory_min'])
             self.assertLessEqual(pr.built_in_memory, data['memory_max'])
-            self.assertIn(pr.ram, [4,2])
-            self.assertNotIn(pr.ram, [3,6])
+            self.assertIn(pr.ram, [4, 2])
+            self.assertNotIn(pr.ram, [3, 6])
 
         data = {
             'processor': 'Qualcomm 1400 Mgz',
@@ -125,7 +126,7 @@ class FilteredProductsTestCase(TestCase):
 
         # Here we test multiple os and diagonal choices, when user wants to
         # see phones with different oses an diagonals
-        data ={
+        data = {
             'os': ['android', 'newos'],
             'diagonal': [5.0, 6.0],
             'processor': 'AMD'

@@ -1,15 +1,15 @@
 import decimal
+import json
+
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, FormMixin
 from django.views.generic.list import ListView
-from django.urls import reverse
-import json
-
 from products.models import Product
+
 from .forms import ContactForm, FilterForm
 
 
@@ -20,9 +20,9 @@ class MainView(ListView, FormMixin):
 
 
 class FilteredProductsView(FormView):
-    template_name   = 'emarket/products_on_main_page.html'
-    form_class      = FilterForm
-    queryset        = Product.objects.all()
+    template_name = 'emarket/products_on_main_page.html'
+    form_class = FilterForm
+    queryset = Product.objects.all()
 
     def form_valid(self, form):
         prs = self.queryset

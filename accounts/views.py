@@ -3,23 +3,20 @@ from django.contrib.auth import (
     get_user_model,
     login,
     logout,
-    )
-from django.views.generic.edit import FormView, UpdateView
-from django.views.generic.base import RedirectView, TemplateView
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+)
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse
+from django.views.generic.base import RedirectView, TemplateView
+from django.views.generic.edit import FormView, UpdateView
 
 from .forms import UserLoginForm, UserRegisterForm, EditProfileForm
 from .models import Profile
-from orders.models import Order
 
 User = get_user_model()
 
 
 class LoginView(FormView):
-
     template_name = 'accounts/form.html'
     form_class = UserLoginForm
     title = 'Login'
@@ -40,7 +37,6 @@ class LoginView(FormView):
 
 
 class RegisterView(FormView):
-
     template_name = 'accounts/form.html'
     form_class = UserRegisterForm
     title = 'Register'
@@ -69,7 +65,6 @@ class LogoutView(RedirectView):
 
 
 class EditProfileView(LoginRequiredMixin, UpdateView):
-
     model = Profile
     login_url = '/accounts/login/'
     template_name = 'accounts/form.html'
@@ -88,18 +83,17 @@ class EditProfileView(LoginRequiredMixin, UpdateView):
 
 
 class ProfileView(TemplateView):
-
     template_name = "accounts/profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.user == self.request.user: # self.user is requested user, not the authenticated one.
+        if self.user == self.request.user:  # self.user is requested user, not the authenticated one.
             # If you look at your own profile page
             # you can also see your orders,
             # but you can't see other's people orders on their pages
-            context['orders'] = self.user.order_set.all() #Order.objects.filter(user=self.user)
+            context['orders'] = self.user.order_set.all()  # Order.objects.filter(user=self.user)
         try:
-            context['profile'] = self.user.profile #Profile.objects.get(user=self.user)
+            context['profile'] = self.user.profile  # Profile.objects.get(user=self.user)
         except:
             pass
         context['user'] = self.user

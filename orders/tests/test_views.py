@@ -1,16 +1,16 @@
-from django.test import TestCase
+from accounts.models import Profile
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core import mail
-from django.conf import settings
+from django.test import TestCase
 from django.urls import reverse
 from mixer.backend.django import mixer
-import json
-
-from ..models import Order, Status, ProductInOrder, ProductInBasket
-from accounts.models import Profile
 from products.models import Product
 
+from ..models import Order, ProductInOrder, ProductInBasket
+
 User = get_user_model()
+
 
 class UpdateBasketListViewTestCase(TestCase):
 
@@ -27,8 +27,8 @@ class UpdateBasketListViewTestCase(TestCase):
 
         self.pr_in_basket1 = mixer.blend(
             ProductInBasket,
-            user = self.user1,
-            product = self.pr1,
+            user=self.user1,
+            product=self.pr1,
             # order = self.order1
         )
         self.pr_in_basket2 = mixer.blend(
@@ -40,8 +40,7 @@ class UpdateBasketListViewTestCase(TestCase):
             ProductInBasket,
             user=self.user2,
             product=self.pr2,
-                )
-
+        )
 
     def test_view_url_exists_and_accessible(self):
         response = self.client.get('/orders/update_basket_list/')
@@ -68,7 +67,6 @@ class UpdateBasketListViewTestCase(TestCase):
             self.assertIn(key, response.context)
 
     def test_view_context_with_user(self):
-
         # ::::First user::::
         self.client.login(username='testuser1', password='somep')
 
@@ -106,7 +104,7 @@ class UpdateBasketListViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
 
         pr_id = self.pr3.id
-        response= self.client.post(reverse('orders:basket_list'), data={'product_id': pr_id, 'nmb': 3})
+        response = self.client.post(reverse('orders:basket_list'), data={'product_id': pr_id, 'nmb': 3})
         self.assertEqual(response.context['products_total_nmb'], 3)
 
         ids = str(self.pr_in_basket1.product.id) + ',' + str(self.pr_in_basket2.product.id) + ','
@@ -128,8 +126,7 @@ class UpdateBasketListViewTestCase(TestCase):
         response = self.client.post(reverse('orders:basket_list'), data={'product_id': pr2_id})
         self.assertEqual(response.context['products_total_nmb'], 2)
 
-
-        response= self.client.post(reverse('orders:basket_list'), data={'remove_product_id': pr_id})
+        response = self.client.post(reverse('orders:basket_list'), data={'remove_product_id': pr_id})
         self.assertEqual(response.context['products_total_nmb'], 1)
 
     def test_update_product_in_basket(self):
@@ -185,8 +182,8 @@ class ChangeProductInBasketViewTestCase(TestCase):
         self.pr1 = mixer.blend(Product, price=12000)
         self.pr_in_basket1 = mixer.blend(
             ProductInBasket,
-            user = self.user1,
-            product = self.pr1,
+            user=self.user1,
+            product=self.pr1,
         )
 
     def test_change_product_in_basket_nmb(self):
@@ -198,6 +195,7 @@ class ChangeProductInBasketViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         product = ProductInBasket.objects.filter(user=self.user1, product=self.pr1).first()
         self.assertEqual(product.nmb, 11)
+
 
 class CheckoutViewTestCase(TestCase):
 
@@ -276,7 +274,6 @@ class CheckoutViewTestCase(TestCase):
             self.assertIn(str(val), msg_text)
         self.assertIn(self.pr1.name, msg_text)
         self.assertIn(self.pr2.name, msg_text)
-
 
     def test_view_with_valid_data_and_anonimous_user(self):
         self.assertEqual(Order.objects.count(), 0)

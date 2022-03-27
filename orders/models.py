@@ -1,7 +1,7 @@
-from django.db import models
 from django.contrib.auth import get_user_model
-from utils.main import disable_for_loaddata
+from django.db import models
 from products.models import Product, ProductImage
+from utils.main import disable_for_loaddata
 
 User = get_user_model()
 
@@ -10,10 +10,10 @@ class Status(models.Model):
     """
     Status of order
     """
-    name      = models.CharField(max_length=64, blank=True, null=True, default=None)
+    name = models.CharField(max_length=64, blank=True, null=True, default=None)
     is_active = models.BooleanField(default=True)
-    created   = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated   = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return "%s" % self.name
@@ -24,18 +24,17 @@ class Status(models.Model):
 
 
 class Order(models.Model):
-
-    user            = models.ForeignKey(User, null=True, default=None, on_delete=models.CASCADE)
-    customer_name   = models.CharField(max_length=64, default=None)
-    customer_email  = models.EmailField(blank=True, null=True, default=None)
-    customer_phone  = models.CharField(max_length=48, null=True, default=None)
+    user = models.ForeignKey(User, null=True, default=None, on_delete=models.CASCADE)
+    customer_name = models.CharField(max_length=64, default=None)
+    customer_email = models.EmailField(blank=True, null=True, default=None)
+    customer_phone = models.CharField(max_length=48, null=True, default=None)
     customer_address = models.CharField(blank=True, null=True, max_length=128, default=None)
-    comments        = models.TextField(blank=True, default=None)
-    status          = models.ForeignKey(Status, on_delete=models.CASCADE)
-    total_price     = models.IntegerField(default=0)
+    comments = models.TextField(blank=True, default=None)
+    status = models.ForeignKey(Status, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    total_price = models.IntegerField(default=0)
 
-    created         = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated         = models.DateTimeField(auto_now_add=False, auto_now=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return "Order %s %s" % (self.id, self.status.name)
@@ -51,17 +50,15 @@ class Order(models.Model):
         return ProductInOrder.objects.filter(order=self)
 
 
-
 class ProductInOrder(models.Model):
-
-    order           = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    product         = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    nmb             = models.IntegerField(default=1)
-    price_per_item  = models.IntegerField(default=0, verbose_name="Price")
-    total_price     = models.IntegerField(default=0, verbose_name="Price")
-    is_active       = models.BooleanField(default=True)
-    created         = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated         = models.DateTimeField(auto_now_add=False, auto_now=True)
+    order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    nmb = models.IntegerField(default=1)
+    price_per_item = models.IntegerField(default=0, verbose_name="Price")
+    total_price = models.IntegerField(default=0, verbose_name="Price")
+    is_active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     def __str__(self):
         return "%s" % self.product.name
@@ -77,7 +74,6 @@ class ProductInOrder(models.Model):
         super(ProductInOrder, self).save(*args, **kwargs)
 
 
-
 @disable_for_loaddata
 def product_in_order_post_save(sender, instance, created, **kwargs):
     """
@@ -89,22 +85,22 @@ def product_in_order_post_save(sender, instance, created, **kwargs):
     instance.order.total_price = order_total_price
     instance.order.save(force_update=True)
 
+
 models.signals.post_save.connect(product_in_order_post_save, sender=ProductInOrder)
 
 
 class ProductInBasket(models.Model):
-
-    user            = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    session_key     = models.CharField(max_length=128, blank=True, null=True, default=True)
-    order           = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    product         = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
-    nmb             = models.IntegerField(default=1)
-    price_per_item  = models.IntegerField(default=0, verbose_name="Price")
-    discount        = models.IntegerField(null=True, blank=True, default=0)
-    total_price     = models.IntegerField(default=0, verbose_name="Price")
-    is_active       = models.BooleanField(default=True)
-    created         = models.DateTimeField(auto_now_add=True, auto_now=False)
-    updated         = models.DateTimeField(auto_now_add=False, auto_now=True)
+    user = models.ForeignKey(User, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=128, blank=True, null=True, default=True)
+    order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    nmb = models.IntegerField(default=1)
+    price_per_item = models.IntegerField(default=0, verbose_name="Price")
+    discount = models.IntegerField(null=True, blank=True, default=0)
+    total_price = models.IntegerField(default=0, verbose_name="Price")
+    is_active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     class Meta:
         verbose_name = "Product in basket"
@@ -118,7 +114,7 @@ class ProductInBasket(models.Model):
         return ProductImage.objects.get(product=self.product, is_main=True).thumbnail.url
 
     @staticmethod
-    def add_product_to_basket(product_id, session_key=None, user=None,  nmb=1):
+    def add_product_to_basket(product_id, session_key=None, user=None, nmb=1):
         """
         Adds product to a basket and assigns it to either user or, if
         user is not authenticated, to session key.

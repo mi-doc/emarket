@@ -1,11 +1,12 @@
 from django.contrib import admin
-from .models import *
 
+from .models import *
 
 
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 0
+
 
 # @admin.register(Processor,
 #                 Operational_system,
@@ -25,7 +26,6 @@ class ProductAdmin(admin.ModelAdmin):
 
     # class Meta:
     #     model = Product
-
 
 # class Operational_systemAdmin(admin.ModelAdmin):
 #     list_display = [field.name for field in Operational_system._meta.fields]
