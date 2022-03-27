@@ -1,4 +1,4 @@
-FROM python:3.6.15
+FROM python:3.8.9
 LABEL maintainer='Mihail Nikolaev m.nikolaev1@gmail.com'
 
 ENV PYTHONUNBUFFERED 1
