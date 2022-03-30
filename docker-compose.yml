@@ -13,7 +13,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/Emarket
-    entrypoint:
+    environment:
       - SECRET_KEY=devsecretkey
       - DEBUG=1
       - DB_HOST=db
@@ -24,7 +24,7 @@ services:
 
   db:
     image: postgres:13-alpine
-    entrypoint:
+    environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=devpassword
