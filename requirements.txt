@@ -16,9 +16,7 @@ gunicorn==19.7.1
 mixer==7.2.2
 pilkit==2.0
 Pillow==9.0.1
-psycopg==3.0.10
 psycopg2==2.9.3
-psycopg2-binary==2.9.3
 PyJWT==1.5.3
 python-dateutil==2.7.3
 pytz==2017.3
