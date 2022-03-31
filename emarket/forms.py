@@ -50,7 +50,7 @@ class FilterForm(forms.Form):
         max_value=9999,
         min_value=0
     )
-    min_price = forms.IntegerField(label='Min price: ' + str(Product.get_min_price()) + ' RUB',
+    min_price = forms.IntegerField(label='Min price: ' + str(Product.get_min_price) + ' RUB',
                                    initial=Product.get_min_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
                                                                    'min': Product.get_min_price,
@@ -58,7 +58,7 @@ class FilterForm(forms.Form):
                                                                    'max': Product.get_max_price,
                                                                    'oninput': 'printprice("mprice")'}))
 
-    max_price = forms.IntegerField(label='Max price: ' + str(Product.get_max_price()) + ' RUB',
+    max_price = forms.IntegerField(label='Max price: ' + str(Product.get_max_price) + ' RUB',
                                    initial=Product.get_max_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
                                                                    'min': Product.get_min_price,
