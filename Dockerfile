@@ -17,8 +17,8 @@ RUN apk update && apk add --update --no-cache tiff-dev jpeg-dev openjpeg-dev zli
     apk del .build-deps && \
     adduser --disabled-password --no-create-home app
 
-COPY . /Emarket/
 ENV PATH="/py/bin:$PATH"
+COPY . /Emarket/
 
 USER app
 
