@@ -15,6 +15,7 @@ services:
       - "8000:8000"
     volumes:
       - .:/Emarket
+      - ./data/web:/vol/web
     environment:
       - SECRET_KEY=devsecretkey
       - DEBUG=1
