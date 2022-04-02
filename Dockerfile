@@ -4,7 +4,6 @@ LABEL maintainer='Mikhail Nikolaev'
 ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt /Emarket/requirements.txt
-COPY ./scripts ./Emarket/scripts
 WORKDIR /Emarket
 EXPOSE 8000
 
@@ -20,12 +19,13 @@ RUN apk update && apk add --update --no-cache tiff-dev jpeg-dev openjpeg-dev zli
     mkdir -p /vol/web/static && \
     mkdir -p /vol/web/media && \
     chown -R app:app /vol && \
-    chmod -R 755 /vol && \
-    chmod -R +x /scripts
+    chmod -R 755 /vol
 
+COPY ./scripts /scripts
+RUN chmod -R +x /scripts
 ENV PATH="/scripts:/py/bin:$PATH"
+
 COPY . /Emarket/
 
 USER app
-
 CMD ["run.sh"]
