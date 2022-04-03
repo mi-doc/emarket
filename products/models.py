@@ -84,19 +84,19 @@ class Product(models.Model):
 
     @classmethod
     def get_max_price(cls):
-        return cls.objects.aggregate(max=Max('price'))['max']
+        return cls.objects.aggregate(max=Max('price'))['max'] or 0
 
     @classmethod
     def get_min_price(cls):
-        return cls.objects.aggregate(min=Min('price'))['min']
+        return cls.objects.aggregate(min=Min('price'))['min'] or 0
 
     @classmethod
     def get_max_memory(cls):
-        return cls.objects.aggregate(max=Max('built_in_memory'))['max']
+        return cls.objects.aggregate(max=Max('built_in_memory'))['max'] or 0
 
     @classmethod
     def get_min_memory(cls):
-        return cls.objects.aggregate(min=Min('built_in_memory'))['min']
+        return cls.objects.aggregate(min=Min('built_in_memory'))['min'] or 0
 
 
 def pre_save_product_receiver(sender, instance, *args, **kwargs):

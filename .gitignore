@@ -27,6 +27,7 @@
 static/media/
 
 db.sqlite3
+postgres-data/
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids

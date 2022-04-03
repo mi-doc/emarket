@@ -28,4 +28,3 @@ ENV PATH="/scripts:/py/bin:$PATH"
 COPY . /Emarket/
 
 USER app
-CMD ["run.sh"]

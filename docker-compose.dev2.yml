@@ -4,8 +4,16 @@ services:
   app:
       build:
         context: .
+      command: >
+        sh -c "
+          python manage.py wait_for_db && 
+          python manage.py collectstatic --noinput &&
+          python manage.py migrate &&
+          uwsgi --socket :9000 --workers 4 --master --enable-threads --module emarket.wsgi 
+        "
       restart: always
       volumes:
+        - .:/Emarket
         - static-data:/vol/web
       environment:
         - DB_HOST=db
@@ -21,7 +29,7 @@ services:
     image: postgres:13-alpine
     restart: always
     volumes:
-      - postgres-data:/val/lib/postgresql/data
+      - ./postgres-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -39,5 +47,4 @@ services:
       - static-data:/vol/static
 
 volumes:
-  postgres-data:
   static-data:
