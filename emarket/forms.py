@@ -35,6 +35,9 @@ class FilterForm(forms.Form):
         for field in self.fields.keys():
             self.fields[field].required = False
 
+        self.fields['min_price'].label = "Min price: " + str(Product.get_min_price()) + ' RUB'
+        self.fields['max_price'].label = "Max price: " + str(Product.get_max_price()) + ' RUB'
+
     os = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
     diagonal = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
     processor = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
@@ -42,24 +45,22 @@ class FilterForm(forms.Form):
 
     memory_min = forms.IntegerField(
         initial=Product.get_min_memory,
-        max_value=9999,
+        max_value=99999,
         min_value=0
     )
     memory_max = forms.IntegerField(
         initial=Product.get_max_memory,
-        max_value=9999,
+        max_value=99999,
         min_value=0
     )
-    min_price = forms.IntegerField(label='Min price: ' + str(Product.get_min_price()) + ' RUB',
-                                   initial=Product.get_min_price,
+    min_price = forms.IntegerField(initial=Product.get_min_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
                                                                    'min': Product.get_min_price,
                                                                    'id': 'mprice',
                                                                    'max': Product.get_max_price,
                                                                    'oninput': 'printprice("mprice")'}))
 
-    max_price = forms.IntegerField(label='Max price: ' + str(Product.get_max_price()) + ' RUB',
-                                   initial=Product.get_max_price,
+    max_price = forms.IntegerField(initial=Product.get_max_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
                                                                    'min': Product.get_min_price,
                                                                    'id': 'maxprice',

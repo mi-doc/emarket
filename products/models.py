@@ -38,9 +38,10 @@ class Product(models.Model):
     def __str__(self):
         return "%s, %s" % (self.price, self.name)
 
+
     def get_main_img_url(self):
         """
-        Returns main image of Product
+        Returns url of the main image of Product
         """
         return ProductImage.objects.get(product=self, is_main=True).image.url
 
