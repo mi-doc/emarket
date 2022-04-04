@@ -45,6 +45,12 @@ class Product(models.Model):
         """
         return ProductImage.objects.get(product=self, is_main=True).image.url
 
+    def get_product_images(self):
+        """
+        Returns a queryset of images attached to the product
+        """
+        return ProductImage.objects.filter(product=self)
+
     def get_price_with_discount(self):
         """
         Product price with discount (if it has discount)
