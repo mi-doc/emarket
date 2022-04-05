@@ -12,10 +12,11 @@ class ProductTestCase(TestCase):
         product = mixer.blend(Product, price=10000, discount=10, name='Samsung')
         product.save()
 
-    def tearDown(self):
-        for pi in ProductImage.objects.all():
-            url = os.getcwd() + pi.image.url
-            os.remove(url)
+    # def tearDown(self):
+    #     for pi in ProductImage.objects.all():
+    #         print('deleting')
+    #         url = os.getcwd() + pi.image.url
+    #         os.remove(url)
 
     def test_get_price_with_discount(self):
         product = mixer.blend(Product, price=10000, discount=10)
@@ -45,6 +46,28 @@ class ProductTestCase(TestCase):
         self.assertNotEqual(
             product.get_main_img_url(),
             image_not_main.image.url
+        )
+
+    def test_get_main_image_url_without_main_image(self):
+        product = Product.objects.first()
+        image_not_main1 = mixer.blend(ProductImage, product=product, is_main=False)
+        image_not_main2 = mixer.blend(ProductImage, product=product, is_main=False)
+
+        self.assertEqual(
+            # Because the product model automatically makes the first image as main, if not specified.
+            product.get_main_img_url(),
+            image_not_main1.image.url
+        )
+        self.assertNotEqual(
+            product.get_main_img_url(),
+            image_not_main2.image.url
+        )
+
+    def test_get_main_image_url_without_images(self):
+        product = Product.objects.first()
+        self.assertEqual(
+            product.get_main_img_url(),
+            None
         )
 
     def test_get_absolute_url(self):

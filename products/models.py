@@ -43,7 +43,15 @@ class Product(models.Model):
         """
         Returns url of the main image of Product
         """
-        return ProductImage.objects.get(product=self, is_main=True).image.url
+        img = ProductImage.objects.filter(product=self, is_main=True).first()
+        if not img:
+            # If the product doesn't have main image, we take the first image and make it main
+            img = ProductImage.objects.filter(product=self).first()
+            if not img:
+                return None
+            img.is_main = True
+            img.save()
+        return img.image.url
 
     def get_product_images(self):
         """
