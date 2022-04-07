@@ -24,3 +24,4 @@ six==1.11.0
 sqlparse==0.3.0
 text-unidecode==1.2
 uWSGI>=2.0.19.1,<2.1
+gunicorn

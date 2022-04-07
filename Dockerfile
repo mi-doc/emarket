@@ -1,7 +1,9 @@
 FROM python:3.8.9-alpine3.13
 LABEL maintainer='Mikhail Nikolaev'
 
+ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV DEBUG 0
 
 COPY requirements.txt /Emarket/requirements.txt
 WORKDIR /Emarket
@@ -27,4 +29,7 @@ ENV PATH="/scripts:/py/bin:$PATH"
 
 COPY . /Emarket/
 
+RUN python manage.py collectstatic && python manage.py makemigrations && python manage.py migrate
 USER app
+
+CMD gunicorn emarket.wsgi:application --bind 0.0.0.0:$PORT
