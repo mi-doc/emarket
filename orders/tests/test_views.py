@@ -145,7 +145,7 @@ class UpdateBasketListViewTestCase(TestCase):
         response = self.client.get(reverse('orders:basket_list'))
         self.assertEqual(response.status_code, 200)
 
-        pr_id = self.pr_in_basket1.id
+        pr_id = self.pr_in_basket1.product.id
         response = self.client.post(reverse('orders:basket_list'), data={'remove_product_id': pr_id})
         self.assertEqual(response.context['products_total_nmb'], 1)
 
