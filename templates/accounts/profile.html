@@ -29,27 +29,27 @@
                 <table class="table table-profile">
                     <tr>
                         <th>First_name: </th>
-                        <td>{{ profile.first_name }}</td>
+                        <td>{% firstof profile.first_name "" %}</td>
                     </tr>
                     <tr>
                         <th>Second name: </th>
-                        <td>{{ profile.second_name }}</td>
+                        <td>{% firstof profile.second_name "" %}</td>
                     </tr>
                     <tr>
                         <th>Gender: </th>
-                        <td>{{ profile.gender }}</td>
+                        <td>{% firstof profile.gender "" %}</td>
                     </tr>
                     <tr>
                         <th>Birth date: </th>
-                        <td>{{ profile.birth_date }}</td>
+                        <td>{% firstof profile.birth_date "" %}</td>
                     </tr>
                     <tr>
                         <th>Phone:</th>
-                        <td>{{ profile.phone }}</td>
+                        <td>{% firstof profile.phone "" %}</td>
                     </tr>
                     <tr>
                         <th>Address:</th>
-                        <td>{{ profile.address }}</td>
+                        <td>{% firstof profile.address "" %}</td>
                     <br>
                 </table>
 

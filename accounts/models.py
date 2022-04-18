@@ -7,6 +7,7 @@ User = get_user_model()
 GENDER_CHOICES = (
     ('M', 'Male'),
     ('F', 'Female'),
+    ('-', '---')
 )
 
 
@@ -14,7 +15,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=64, null=True, default=None)
     second_name = models.CharField(max_length=64, null=True, default=None)
-    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, blank=True, default='M')
+    gender = models.CharField(max_length=10, choices=GENDER_CHOICES, default='-')
     birth_date = models.DateField(blank=True, null=True, default=None)
     phone = models.CharField(blank=True, null=True, default=None, max_length=48)
     address = models.CharField(blank=True, null=True, default=None, max_length=128)

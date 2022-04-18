@@ -54,3 +54,9 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ['user']
+        widgets = {
+            'birth_date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+
