@@ -9,7 +9,19 @@ from django import forms
 class ProductImageInline(admin.TabularInline):
     model = ProductImage
     extra = 0
-    exclude = ('is_main', )
+    readonly_fields = ('img',)
+
+    def get_fields(self, request, obj=None):
+        return [
+            'img',
+            'image',
+            'product',
+            'is_active'
+        ]
+
+    def img(self, obj):
+        return format_html(f'<img src="{obj.image.url}" max-height="100px" width="100px"/>')
+
 
 
 class ProjectAdminForm(forms.ModelForm):
