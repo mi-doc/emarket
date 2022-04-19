@@ -109,3 +109,4 @@ env.bak/
 venv.bak/
 
 coverage_html_report
+docker-compose.dev2.yml
