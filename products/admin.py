@@ -1,10 +1,26 @@
 from django import forms
 from django.contrib import admin
+from django.contrib.contenttypes import admin as c_admin
 from django.db import models
 from django.urls import reverse
 from django.utils.html import format_html
 
 from .models import Product, ProductImage
+from comments.models import Comment
+
+
+class CommentAdmin(c_admin.GenericTabularInline):
+    model = Comment
+    extra = 0
+
+    fields = ('user', 'content')
+
+
+    readonly_fields = [
+        'user',
+    ]
+
+
 
 
 class ProductImageInline(admin.TabularInline):
@@ -46,12 +62,25 @@ class ProductAdminForm(forms.ModelForm):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Product._meta.fields]
-    list_display.remove('slug')
-    list_display.remove('short_description')
-    list_display[1] = 'product_name'
-    list_display[5] = 'description'
-    list_display.insert(2, 'image_tag')
+
+    list_display = [
+        'id',
+        'product_name',
+        'image_tag',
+        'price',
+        'discount',
+        'os',
+        'description',
+        'diagonal',
+        'screen_resolution',
+        'ram',
+        'processor',
+        'built_in_memory',
+        'main_camera',
+        'other_specifications',
+        'created',
+        'updated'
+    ]
 
     formfield_overrides = {
         models.TextField: {'widget': forms.Textarea(
@@ -75,4 +104,4 @@ class ProductAdmin(admin.ModelAdmin):
     image_tag.short_description = 'Main image'
 
     form = ProductAdminForm
-    inlines = [ProductImageInline]
+    inlines = [ProductImageInline, CommentAdmin]
