@@ -1,16 +1,16 @@
 # Emarket
-##Table of contents
-* [General info](#general info)
+## Table of contents
+* [General info](#general-info)
 * [Technologies](#technologies)
 * [Functionality](#functionality)
 * [Setup](#setup)
 
-##General info
+## General info
 Minimalistic online tablet store. 
 Provides most basic functionality for customers and staff. 
 This is a training project. 
 
-##Technologies
+## Technologies
 - Python 3.8
 - Django 3.0
 - Django Rest Framework
@@ -20,7 +20,7 @@ This is a training project.
 - Nginx
 - Docker
 
-##Functionality 
+## Functionality 
 ###### Products
 - Viewing product cards on the main page
 - Filtering products by parameters, price
@@ -47,7 +47,7 @@ This is a training project.
 - Allows requesting product list with pre-selected parameters to show 
 - Create/update/delete products for admin and staff
 
-##Setup
+## Setup
 - Install [docker-compose](https://docs.docker.com/compose/install/)
 - git clone https://github.com/mi-doc/emarket.git && cd emarket
 - cat .env.sample >> .env 
