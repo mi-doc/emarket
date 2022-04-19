@@ -20,7 +20,7 @@ class Product(models.Model):
     name = models.CharField(max_length=64, blank=True, null=True, default=None, verbose_name="Products")
     price = models.IntegerField(null=True, default=0, verbose_name="Price")
     discount = models.IntegerField(null=True, default=0, verbose_name="Discount (percent)")
-    short_description = models.TextField(null=True, max_length=100, blank=True, default=None)
+    short_description = models.TextField(null=True, max_length=300, blank=True, default=None)
     diagonal = models.DecimalField(null=True, max_digits=5, decimal_places=1, blank=True, default=None,
                                    verbose_name="Diagonal (inches)")
     built_in_memory = models.IntegerField(null=True, blank=True, default=None, verbose_name="Built in memory (Gb)")
@@ -52,6 +52,19 @@ class Product(models.Model):
             img.is_main = True
             img.save()
         return img.image.url
+
+    def set_main_img(self, main_img_id=None):
+        pr_images = self.get_product_images()
+        if not main_img_id: return
+        if not pr_images.filter(id=main_img_id): return
+
+        for image in pr_images:
+            image.is_main = False
+            image.save()
+
+        main_image = pr_images.get(id=main_img_id)
+        main_image.is_main = True
+        main_image.save()
 
     def get_product_images(self):
         """

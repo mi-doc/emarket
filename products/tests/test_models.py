@@ -48,6 +48,55 @@ class ProductTestCase(TestCase):
             image_not_main.image.url
         )
 
+    def test_set_main_img(self):
+        product = Product.objects.first()
+        first_image = mixer.blend(ProductImage, product=product, is_main=True)
+        second_image = mixer.blend(ProductImage, product=product, is_main=False)
+
+        self.assertEqual(
+            product.get_main_img_url(),
+            first_image.image.url
+        )
+        self.assertNotEqual(
+            product.get_main_img_url(),
+            second_image.image.url
+        )
+
+        product.set_main_img(main_img_id=second_image.id)
+
+        self.assertEqual(
+            product.get_main_img_url(),
+            second_image.image.url
+        )
+        self.assertNotEqual(
+            product.get_main_img_url(),
+            first_image.image.url
+        )
+
+        product.set_main_img()
+        # Without keyword argument main_img_id nothing should happen
+
+        self.assertEqual(
+            product.get_main_img_url(),
+            second_image.image.url
+        )
+        self.assertNotEqual(
+            product.get_main_img_url(),
+            first_image.image.url
+        )
+
+        product.set_main_img(main_img_id=123123123123123)
+        # With wrong id nothing should happen
+
+        self.assertEqual(
+            product.get_main_img_url(),
+            second_image.image.url
+        )
+        self.assertNotEqual(
+            product.get_main_img_url(),
+            first_image.image.url
+        )
+
     def test_get_main_image_url_without_main_image(self):
         product = Product.objects.first()
         image_not_main1 = mixer.blend(ProductImage, product=product, is_main=False)

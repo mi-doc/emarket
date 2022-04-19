@@ -1,9 +1,10 @@
+from django import forms
 from django.contrib import admin
 from django.db import models
-from .models import Product, ProductImage
-from django.utils.html import format_html
 from django.urls import reverse
-from django import forms
+from django.utils.html import format_html
+
+from .models import Product, ProductImage
 
 
 class ProductImageInline(admin.TabularInline):
@@ -23,28 +24,20 @@ class ProductImageInline(admin.TabularInline):
         return format_html(f'<img src="{obj.image.url}" max-height="100px" width="100px"/>')
 
 
-
-class ProjectAdminForm(forms.ModelForm):
-
+class ProductAdminForm(forms.ModelForm):
     Main_image = forms.ChoiceField()
 
     def __init__(self, *args, **kwargs):
-        super(ProjectAdminForm, self).__init__(*args, **kwargs)
+        super(ProductAdminForm, self).__init__(*args, **kwargs)
         self.product = kwargs['instance']
         image_choices = [(p.id, p.image.url) for p in kwargs['instance'].get_product_images()]
         self.fields['Main_image'].choices = image_choices
         self.fields['Main_image'].required = False
 
     def save(self, commit=True):
-        pr_images = ProductImage.objects.filter(product=self.product)
-        for image in pr_images:
-            image.is_main = False
-            image.save()
-        Main_image_id = self.cleaned_data.get('Main_image', None)
-        main_image = pr_images.get(id=Main_image_id)
-        main_image.is_main = True
-        main_image.save()
-        return super(ProjectAdminForm, self).save(commit=commit)
+        main_image_id = self.cleaned_data.get('Main_image', None)
+        self.product.set_main_img(main_img_id=main_image_id)
+        return super(ProductAdminForm, self).save(commit=commit)
 
     class Meta:
         model = Product
@@ -52,11 +45,20 @@ class ProjectAdminForm(forms.ModelForm):
 
 
 @admin.register(Product)
-class ProjectAdmin(admin.ModelAdmin):
+class ProductAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Product._meta.fields]
     list_display.remove('slug')
+    list_display.remove('short_description')
     list_display[1] = 'product_name'
+    list_display[5] = 'description'
     list_display.insert(2, 'image_tag')
+
+    formfield_overrides = {
+        models.TextField: {'widget': forms.Textarea(
+            attrs={'rows': 7,
+                   'cols': 60,
+                   })},
+    }
 
     def product_name(self, obj):
         url = reverse('admin:products_product_change', args=(obj.id,))
@@ -65,7 +67,12 @@ class ProjectAdmin(admin.ModelAdmin):
     def image_tag(self, obj):
         print(obj.get_main_img_url())
         return format_html(f'<img src="{obj.get_main_img_url()}"  height="60" />')
+
+    def description(self, obj):
+        text = obj.short_description
+        return (text[:75] + '...') if len(text) > 75 else text
+
     image_tag.short_description = 'Main image'
 
-    form = ProjectAdminForm
+    form = ProductAdminForm
     inlines = [ProductImageInline]
