@@ -60,6 +60,10 @@
                 <div id="specifications">
                     <table class="table">
                         <tr>
+                            <td>Os:</td>
+                            <td>{{ product.os}}</td>
+                        </tr>
+                        <tr>
                             <td>Diagonal:</td>
                             <td>{{ product.diagonal }}</td>
                         </tr>
@@ -121,7 +125,7 @@
                     <p class='lead'>
                     <h3>Other specifications</h3></p>
 
-                    {{ product.other_specifications }}
+                    <p>{{ product.other_specifications|linebreaks }}</p>
                 </div>
             </div>
         </div>

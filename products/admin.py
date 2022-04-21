@@ -36,28 +36,45 @@ class ProductImageInline(admin.TabularInline):
 
 
 class ProductAdminForm(forms.ModelForm):
-    Main_image = forms.ChoiceField()
+    Main_image = forms.ChoiceField(required=False, help_text='Main image of the product to show on product card')
 
     def __init__(self, *args, **kwargs):
         super(ProductAdminForm, self).__init__(*args, **kwargs)
-        self.product = kwargs['instance']
-        image_choices = [(p.id, p.image.url) for p in kwargs['instance'].get_product_images()]
-        self.fields['Main_image'].choices = image_choices
-        self.fields['Main_image'].required = False
+        self.fields['slug'].widget.attrs['disabled'] = True
+
+        self.product = kwargs.get('instance', None)
+        if self.product:
+            image_choices = [(p.id, p.image.url) for p in self.product.get_product_images()]
+            self.fields['Main_image'].choices = image_choices
+            self.fields['Main_image'].required = False
 
     def save(self, commit=True):
         main_image_id = self.cleaned_data.get('Main_image', None)
-        self.product.set_main_img(main_img_id=main_image_id)
+        if main_image_id:
+            self.product.set_main_img(main_img_id=main_image_id)
         return super(ProductAdminForm, self).save(commit=commit)
 
     class Meta:
         model = Product
         fields = '__all__'
+        labels = {
+            'name': 'Name'
+        }
+        help_texts = {
+            'slug': 'This field is generated automatically',
+            'name': "Full name of the product",
+            'price': 'Price in RUB',
+            'screen_resolution': "Use 'x' as separator. Example: 2160ч1620",
+            'discount': 'Discount for the product if present. In percent.',
+            'other_specifications': 'Any additional info of the product',
+        }
 
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
 
+    form = ProductAdminForm
+    inlines = [ProductImageInline, CommentAdmin]
     list_display = [
         'id',
         'product_name',
@@ -98,5 +115,3 @@ class ProductAdmin(admin.ModelAdmin):
 
     image_tag.short_description = 'Main image'
 
-    form = ProductAdminForm
-    inlines = [ProductImageInline, CommentAdmin]

@@ -16,7 +16,7 @@ class Product(models.Model):
         verbose_name = "Product"
         verbose_name_plural = "Products"
 
-    slug = models.SlugField(default=None, null=True)
+    slug = models.SlugField(default=None, blank=True, null=True)
     name = models.CharField(max_length=64, blank=True, null=True, default=None, verbose_name="Products")
     price = models.IntegerField(null=True, default=0, verbose_name="Price")
     discount = models.IntegerField(null=True, default=0, verbose_name="(%) disc.")
