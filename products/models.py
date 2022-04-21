@@ -1,4 +1,3 @@
-from comments.models import Comment
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.db.models import Max, Min
@@ -8,6 +7,7 @@ from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFit
 from rest_framework.reverse import reverse as api_reverse
 
+from comments.models import Comment
 from .utils import unique_slug_generator
 
 
@@ -38,7 +38,6 @@ class Product(models.Model):
     def __str__(self):
         return "%s, %s" % (self.price, self.name)
 
-
     def get_main_img_url(self):
         """
         Returns url of the main image of Product
@@ -54,6 +53,11 @@ class Product(models.Model):
         return img.image.url
 
     def set_main_img(self, main_img_id=None):
+        """
+        Setting maing image for product
+        :param main_img_id: id of a particular product image to become the main image of a product
+        :return: nothing
+        """
         pr_images = self.get_product_images()
         if not main_img_id: return
         if not pr_images.filter(id=main_img_id): return
@@ -83,17 +87,14 @@ class Product(models.Model):
         return int(discount_price)
 
     def get_absolute_url(self):
+        """
+        Returns absolute url of a product
+        :return: url
+        """
         return reverse("products:product", kwargs={"slug": self.slug})
 
     def get_api_url(self, request=None):
         return api_reverse("api:product-rud", kwargs={'pk': self.pk}, request=request)
-
-    @classmethod
-    def get_distinct_values_from_field(cls, field):
-        values = list(cls.objects.all().values_list(field).order_by(field).distinct())
-        if (None,) in values:
-            values.remove((None,))
-        return values
 
     @property
     def comments(self):
@@ -106,24 +107,67 @@ class Product(models.Model):
 
     @property
     def get_content_type(self):
+        """
+        Return content type
+        :return: content type
+        """
         instance = self
         content_type = ContentType.objects.get_for_model(instance.__class__)
         return content_type
 
     @classmethod
+    def get_distinct_values_from_field(cls, field):
+        """
+        Returns a list of all distinct values of a specified field of product
+        (like all processors in all available products)
+        :param field: a field to get values for
+        :return: a list of values
+        """
+        values = list(cls.objects.all().values_list(field).order_by(field).distinct())
+        if (None,) in values:
+            values.remove((None,))
+        return values
+
+    @classmethod
+    def get_field_choices(cls, field):
+        """
+        Returns a tuple with choices for a form field
+        :param field: a field to get choices for
+        :return: a tuple with choices
+        """
+        val = cls.get_distinct_values_from_field(field)
+        return ((v[0], v[0]) for v in val)
+
+    @classmethod
     def get_max_price(cls):
+        """
+        Returns price of a most expencive product
+        :return: integer
+        """
         return cls.objects.aggregate(max=Max('price'))['max'] or 0
 
     @classmethod
     def get_min_price(cls):
+        """
+        Returns price of the cheapest product
+        :return: integer
+        """
         return cls.objects.aggregate(min=Min('price'))['min'] or 0
 
     @classmethod
     def get_max_memory(cls):
+        """
+        Returns the biggest built-in memory of all products
+        :return: integer
+        """
         return cls.objects.aggregate(max=Max('built_in_memory'))['max'] or 0
 
     @classmethod
     def get_min_memory(cls):
+        """
+        Returns the smallest built-in memory of all products
+        :return: integer
+        """
         return cls.objects.aggregate(min=Min('built_in_memory'))['min'] or 0
 
 

@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     // Highlighting active menu
     var menus = [
         'main',
@@ -19,17 +18,16 @@ $(document).ready(function () {
     });
 
 
-    // Changing button in product_item div on main page according to
-    // presence product in basket
+    // Changing button in product_item div on main page if the product in basket
     function updateAddToBasketButtons() {
 
         // when django renders template of products in navbar basket,
         // it includes hidden data with ids of all products in basket
         var products_in_basket_ids = String($('#hidden_basket_data').data('products-ids'));
 
-        // If product's id on product_item_div matches with one of those that is already in basket,
-        // its button in product_item div changes from "add to basket" to "go to checkout"
-        // else - "add to basket"
+        // If product's id in product_item_div matches with one of those that is already in basket,
+        // (i.e. the product is already added to basket), its button in product_item div changes from
+        // "add to basket" to "go to checkout" else - "add to basket"
         $('.changing-button').each(function (i, elem) {
             if (products_in_basket_ids.indexOf(elem.getAttribute('data-id')) !== -1) {
                 $(elem)
@@ -48,9 +46,10 @@ $(document).ready(function () {
     // Adding product to basket on home page
     $(document)
         .on('click', '.btn-add-to-basket', function (e) {
-            if (e.target.getAttribute('id') != 'submit-btn') {         // because we don't need this logic
-                var product_id = e.target.getAttribute('data-id');     // when submit button in form clicked
-                var data = {};                                         // (on products.html)
+            if (e.target.getAttribute('id') != 'submit-btn') {
+                // we don't need this logic when submit button in form clicked
+                var product_id = e.target.getAttribute('data-id');
+                var data = {};
                 data.product_id = product_id;
                 data.csrfmiddlewaretoken = document.querySelector('[name="csrfmiddlewaretoken"]').value
                 updateBasketList('POST', data);
@@ -279,6 +278,7 @@ $(document).ready(function () {
                         value = parseFloat(value)
                 }
 
+                // Here we disable form choices from products that are already filtered-out
                 if (products_data[param].includes(value)) {
                     $(this).removeAttr('disabled');
                     $(this).parent().removeClass('filter-disabled-input');

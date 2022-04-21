@@ -12,15 +12,10 @@ from comments.models import Comment
 class CommentAdmin(c_admin.GenericTabularInline):
     model = Comment
     extra = 0
-
     fields = ('user', 'content')
-
-
     readonly_fields = [
         'user',
     ]
-
-
 
 
 class ProductImageInline(admin.TabularInline):

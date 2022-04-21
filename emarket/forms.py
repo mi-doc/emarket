@@ -3,15 +3,13 @@ from products.models import Product
 
 
 class ContactForm(forms.Form):
+    """
+    Contact form for customer support via email
+    """
     subject = forms.CharField(max_length=100, widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
     sender = forms.EmailField(widget=forms.TextInput(attrs={'size': '40', 'class': 'form-control'}))
     message = forms.CharField(widget=forms.Textarea(attrs={'class': 'form-control'}))
     copy = forms.BooleanField(required=False)
-
-
-def get_field_choices(field):
-    val = Product.get_distinct_values_from_field(field)
-    return ((v[0], v[0]) for v in val)
 
 
 class FilterForm(forms.Form):
@@ -27,11 +25,11 @@ class FilterForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Creating choices for every field
+        # Creating choices for every field in filter
         for field in self.fields_with_choices:
-            self.fields[field].choices = get_field_choices(field)
+            self.fields[field].choices = Product.get_field_choices(field)
 
-        # Fields in the filter are not required
+        # Fields in the filter are not required to be used
         for field in self.fields.keys():
             self.fields[field].required = False
 
