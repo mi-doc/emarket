@@ -10,12 +10,12 @@ Product_detail.html styles
 }
 
 .carousel{
-    height: 400px;
+    height: 600px;
     background-color: white;
 }
 
 .item > img{
-    max-height: 380px;
+    max-height: 600px;
     margin: auto;
 }
 
@@ -43,8 +43,25 @@ Product_detail.html styles
 .product .row {
     background-color: white;
     height: 100%;
-    margin: 40px;
-    padding: 40px;
+    margin: 20px;
+    padding: 20px;
+}
+
+#container-product {
+    width: auto;
+}
+
+#specifications {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.table>tbody>tr>td {
+    padding-left: 0px;
+}
+
+.table>tbody>tr:first-child>td{
+    border-top: none;
 }
 
 .add-to-basket-form{
