@@ -160,12 +160,12 @@ STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 AVATAR_AUTO_GENERATE_SIZES = (80, 200)
 
 # Email settings
-EMAIL_HOST = 'smtp.mail.ru'
-EMAIL_HOST_USER = 'm10040@mail.ru'
-EMAIL_HOST_PASSWORD = 'mstosorok14'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 2525
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'm10040@mail.ru'
 SERVER_EMAIL = EMAIL_HOST_USER
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 

@@ -4,6 +4,7 @@ import json
 from django.conf import settings
 from django.core.mail import send_mail, BadHeaderError
 from django.http import HttpResponse
+from django.template.response import SimpleTemplateResponse
 from django.urls import reverse
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import FormView, FormMixin
@@ -102,4 +103,6 @@ Message from: {sender}
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, recepients)
         except BadHeaderError:
             return HttpResponse('Invalid header found')
+        except:
+            return SimpleTemplateResponse('emarket/email_error.html')
         return super().form_valid(form)

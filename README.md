@@ -10,6 +10,8 @@ Minimalistic online tablet store.
 Provides most basic functionality for customers and staff. 
 This is a training project. 
 
+Deployed version: http://emarket-store.ru
+
 ## Technologies
 - Python 3.8
 - Django 3.0
@@ -40,7 +42,7 @@ This is a training project.
 - Profile page
     - Personal information, avatar
     - Viewing list of user's orders with their statuses
-- Registered users are able to write comments to products and reply to other users
+- Registered users are able to write comments on products and reply to other users
 - Contacts page with the possibility to send an email to admins
 
 ###### API

@@ -8,7 +8,6 @@ services:
         sh -c "
           python manage.py wait_for_db && 
           python manage.py collectstatic --noinput &&
-          python manage.py makemigrations &&
           python manage.py migrate &&
           uwsgi --socket :9000 --workers 4 --master --enable-threads --module emarket.wsgi 
         "
@@ -22,6 +21,9 @@ services:
         - DB_PASS=${DB_PASS}
         - SECRET_KEY=${SECRET_KEY}
         - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+        - EMAIL_HOST=${EMAIL_HOST}
+        - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+        - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       depends_on:
         - db
 
