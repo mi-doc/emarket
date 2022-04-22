@@ -64,7 +64,7 @@ class ProductAdminForm(forms.ModelForm):
             'slug': 'This field is generated automatically',
             'name': "Full name of the product",
             'price': 'Price in RUB',
-            'screen_resolution': "Use 'x' as separator. Example: 2160ч1620",
+            'screen_resolution': "Use 'x' as separator. Example: 2160x1620",
             'discount': 'Discount for the product if present. In percent.',
             'other_specifications': 'Any additional info of the product',
         }

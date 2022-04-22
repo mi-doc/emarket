@@ -61,7 +61,7 @@
                     <table class="table">
                         <tr>
                             <td>Os:</td>
-                            <td>{{ product.os}}</td>
+                            <td>{{ product.os }}</td>
                         </tr>
                         <tr>
                             <td>Diagonal:</td>
@@ -93,6 +93,14 @@
                         </tr>
                     </table>
                 </div>
+                {% if request.user.is_superuser %}
+                    <div>
+                        <p>
+                            <a href="{% url 'admin:products_product_change' product.id %}">Open admin panel with
+                                product</a>
+                        </p>
+                    </div>
+                {% endif %}
                 <div class="add-to-basket-form">
                     <div>
                         <h4>
