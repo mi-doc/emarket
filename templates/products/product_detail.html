@@ -57,6 +57,13 @@
                 <h1 class="text-center">
                     {{ product.name }}
                 </h1>
+                <div class="short-description">
+                    <mark>
+                        <p>
+                            {{ product.short_description }}
+                        </p>
+                    </mark>
+                </div>
                 <div id="specifications">
                     <table class="table">
                         <tr>
@@ -87,10 +94,10 @@
                             <td>Main camera (Mpx):</td>
                             <td>{{ product.main_camera }}</td>
                         </tr>
-                        <tr>
-                            <td>Short description:</td>
-                            <td>{{ product.short_description }}</td>
-                        </tr>
+                        {#                        <tr>#}
+                        {#                            <td>Short description:</td>#}
+                        {#                            <td>{{ product.short_description }}</td>#}
+                        {#                        </tr>#}
                     </table>
                 </div>
                 {% if request.user.is_superuser %}

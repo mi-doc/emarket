@@ -51,8 +51,12 @@ Product_detail.html styles
     width: auto;
 }
 
+.short-description {
+    margin-top: 15px;
+}
+
 #specifications {
-    margin-top: 50px;
+    margin-top: 15px;
     margin-bottom: 50px;
 }
 
