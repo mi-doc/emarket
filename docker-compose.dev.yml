@@ -16,17 +16,9 @@ services:
     volumes:
       - .:/Emarket
       - ./data/web:/vol/web
+    env_file: .env
     environment:
       - DEBUG=1
-      - DB_HOST=db
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASS}
-      - SECRET_KEY=${SECRET_KEY}
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
     depends_on:
       - db
 
@@ -34,8 +26,5 @@ services:
     image: postgres:13-alpine
     volumes:
       - ./dev-postgres-data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
+    env_file: .env
 

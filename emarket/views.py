@@ -28,10 +28,10 @@ class FilteredProductsView(FormView):
     def form_valid(self, form):
         prs = self.queryset
         data = form.cleaned_data
-
+ 
         oses = data['os']
         if oses: prs = prs.filter(os__in=oses)
-
+    
         diagonals = data['diagonal']
         if diagonals: prs = prs.filter(diagonal__in=diagonals)
 

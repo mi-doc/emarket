@@ -14,16 +14,7 @@ services:
       restart: always
       volumes:
         - static-data:/vol/web
-      environment:
-        - DB_HOST=db
-        - DB_NAME=${DB_NAME}
-        - DB_USER=${DB_USER}
-        - DB_PASS=${DB_PASS}
-        - SECRET_KEY=${SECRET_KEY}
-        - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-        - EMAIL_HOST=${EMAIL_HOST}
-        - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-        - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      env_file: .env
       depends_on:
         - db
 
@@ -32,10 +23,7 @@ services:
     restart: always
     volumes:
       - postgres-data:/vol/lib/postgresql/data
-    environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
+    env_file: .env
 
   proxy:
     build:

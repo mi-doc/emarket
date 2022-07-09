@@ -50,8 +50,8 @@ Deployed version: http://emarket-store.ru
 - Create/update/delete products for admin and staff
 
 ## Setup
-- Install [docker-compose](https://docs.docker.com/compose/install/)
-- git clone https://github.com/mi-doc/emarket.git && cd emarket
-- cat .env.sample >> .env 
-- docker-compose -f docker-compose.prod.yml build
-- docker-compose -f docker-compose.prod.yml up 
+1. Install [docker-compose](https://docs.docker.com/compose/install/)
+2. ```git clone https://github.com/mi-doc/emarket.git && cd emarket```
+3. ```cat .env.sample >> .env ```
+4. ```docker-compose -f docker-compose.prod.yml build```
+5. ```docker-compose -f docker-compose.prod.yml up ```
