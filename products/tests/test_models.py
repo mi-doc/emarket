@@ -12,12 +12,6 @@ class ProductTestCase(TestCase):
         product = mixer.blend(Product, price=10000, discount=10, name='Samsung')
         product.save()
 
-    # def tearDown(self):
-    #     for pi in ProductImage.objects.all():
-    #         print('deleting')
-    #         url = os.getcwd() + pi.image.url
-    #         os.remove(url)
-
     def test_get_price_with_discount(self):
         product = mixer.blend(Product, price=10000, discount=10)
         product.save()
@@ -130,6 +124,34 @@ class ProductTestCase(TestCase):
         url2 = product2.get_absolute_url()
         self.assertNotEqual(url2, absolute_url)
         self.assertTrue(url2.find(absolute_url[:1]) != -1)
+
+    def test_get_field_choices(self):
+        product = mixer.blend(Product, price=25000, name='meizu mx5', os='android')
+        product.save()
+        product2 = mixer.blend(Product, os='android', name='whatever')
+        product2.save()
+        product3 = mixer.blend(Product, os='ios', name='iphone')
+        product3.save()
+        
+        res = Product.objects.get_field_choices('os')
+        self.assertEqual(len(res), 2)
+        self.assertIn(('android', 'android'), res)
+        self.assertIn(('ios', 'ios'), res)
+    
+    def test_get_max_and_min_specs(self):
+        p1 = mixer.blend(Product, price=12000, built_in_memory=64, name='Samsung Galaxy')
+        p1.save()
+        p2 = mixer.blend(Product, price=15000, built_in_memory=128, name='Samsung Ultra')
+        p2.save()
+        p3 = mixer.blend(Product, price=9000, built_in_memory=64, name='Xiaomi')
+        p3.save()
+        p4 = mixer.blend(Product, price=22000, built_in_memory=256, name='Sony')
+        p4.save()
+
+        self.assertEqual(Product.objects.get_max_price(), p4.price)
+        self.assertEqual(Product.objects.get_min_price(), p3.price)
+        self.assertEqual(Product.objects.get_min_memory(), p1.built_in_memory)
+        self.assertEqual(Product.objects.get_max_memory(), p4.built_in_memory)
 
 
 class ProductImageTestCase(TestCase):

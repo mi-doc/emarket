@@ -11,10 +11,63 @@ from comments.models import Comment
 from .utils import unique_slug_generator
 
 
+class ProductManager(models.Manager):
+    
+    def get_distinct_values_from_field(self, field):
+        """
+        Returns a list of all distinct values of a specified field of product
+        (like all processors in all available products)
+        :param field: a field to get values for
+        :return: a list of values
+        """
+        values = list(self.all().values_list(field).order_by(field).distinct())
+        if (None,) in values:
+            values.remove((None,))
+        return values
+
+    def get_field_choices(self, field):
+        """
+        Returns a tuple with choices for a form field
+        :param field: a field to get choices for
+        :return: a tuple with choices
+        """
+        val = self.get_distinct_values_from_field(field)
+        return [(v[0], v[0]) for v in val]
+
+    def get_max_price(self):
+        """
+        Returns price of the most expencive product
+        :return: integer
+        """
+        return self.aggregate(max=Max('price'))['max'] or 0
+
+    def get_min_price(self):
+        """
+        Returns price of the cheapest product
+        :return: integer
+        """
+        return self.aggregate(min=Min('price'))['min'] or 0
+
+    def get_max_memory(self):
+        """
+        Returns the biggest built-in memory of all products
+        :return: integer
+        """
+        return self.aggregate(max=Max('built_in_memory'))['max'] or 0
+
+    def get_min_memory(self):
+        """
+        Returns the smallest built-in memory of all products
+        :return: integer
+        """
+        return self.aggregate(min=Min('built_in_memory'))['min'] or 0 
+
+
 class Product(models.Model):
     class Meta:
         verbose_name = "Product"
         verbose_name_plural = "Products"
+    objects = ProductManager()
 
     slug = models.SlugField(default=None, blank=True, null=True)
     name = models.CharField(max_length=64, blank=True, null=True, default=None, verbose_name="Products")
@@ -114,61 +167,6 @@ class Product(models.Model):
         instance = self
         content_type = ContentType.objects.get_for_model(instance.__class__)
         return content_type
-
-    @classmethod
-    def get_distinct_values_from_field(cls, field):
-        """
-        Returns a list of all distinct values of a specified field of product
-        (like all processors in all available products)
-        :param field: a field to get values for
-        :return: a list of values
-        """
-        values = list(cls.objects.all().values_list(field).order_by(field).distinct())
-        if (None,) in values:
-            values.remove((None,))
-        return values
-
-    @classmethod
-    def get_field_choices(cls, field):
-        """
-        Returns a tuple with choices for a form field
-        :param field: a field to get choices for
-        :return: a tuple with choices
-        """
-        val = cls.get_distinct_values_from_field(field)
-        return ((v[0], v[0]) for v in val)
-
-    @classmethod
-    def get_max_price(cls):
-        """
-        Returns price of a most expencive product
-        :return: integer
-        """
-        return cls.objects.aggregate(max=Max('price'))['max'] or 0
-
-    @classmethod
-    def get_min_price(cls):
-        """
-        Returns price of the cheapest product
-        :return: integer
-        """
-        return cls.objects.aggregate(min=Min('price'))['min'] or 0
-
-    @classmethod
-    def get_max_memory(cls):
-        """
-        Returns the biggest built-in memory of all products
-        :return: integer
-        """
-        return cls.objects.aggregate(max=Max('built_in_memory'))['max'] or 0
-
-    @classmethod
-    def get_min_memory(cls):
-        """
-        Returns the smallest built-in memory of all products
-        :return: integer
-        """
-        return cls.objects.aggregate(min=Min('built_in_memory'))['min'] or 0
 
 
 def pre_save_product_receiver(sender, instance, *args, **kwargs):

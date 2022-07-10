@@ -5,12 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Django",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/manage.py",
+            "args": [
+                "runserver"
+            ],
+            "django": true,
+            "justMyCode": true
+        },
+        {
             "name": "Python: удаленное подключение",
             "type": "python",
             "request": "attach",
             "connect": {
                 "host": "0.0.0.0",
-                "port": 5678
+                "port": 5678,
             },
             "pathMappings": [
                 {

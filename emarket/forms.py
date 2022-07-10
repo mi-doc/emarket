@@ -27,14 +27,14 @@ class FilterForm(forms.Form):
         super().__init__(*args, **kwargs)
         # Creating choices for every field in filter
         for field in self.fields_with_choices:
-            self.fields[field].choices = Product.get_field_choices(field)
+            self.fields[field].choices = Product.objects.get_field_choices(field)
 
         # Fields in the filter are not required to be used
         for field in self.fields.keys():
             self.fields[field].required = False
 
-        self.fields['min_price'].label = "Min price: " + str(Product.get_min_price()) + ' RUB'
-        self.fields['max_price'].label = "Max price: " + str(Product.get_max_price()) + ' RUB'
+        self.fields['min_price'].label = "Min price: " + str(Product.objects.get_min_price()) + ' RUB'
+        self.fields['max_price'].label = "Max price: " + str(Product.objects.get_max_price()) + ' RUB'
 
     os = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
     diagonal = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
@@ -42,27 +42,27 @@ class FilterForm(forms.Form):
     ram = forms.MultipleChoiceField(widget=forms.CheckboxSelectMultiple())
 
     memory_min = forms.IntegerField(
-        initial=Product.get_min_memory,
+        initial=Product.objects.get_min_memory,
         max_value=99999,
         min_value=0
     )
     memory_max = forms.IntegerField(
-        initial=Product.get_max_memory,
+        initial=Product.objects.get_max_memory,
         max_value=99999,
         min_value=0
     )
-    min_price = forms.IntegerField(initial=Product.get_min_price,
+    min_price = forms.IntegerField(initial=Product.objects.get_min_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
-                                                                   'min': Product.get_min_price,
+                                                                   'min': Product.objects.get_min_price,
                                                                    'id': 'mprice',
-                                                                   'max': Product.get_max_price,
+                                                                   'max': Product.objects.get_max_price,
                                                                    'oninput': 'printprice("mprice")'}))
 
-    max_price = forms.IntegerField(initial=Product.get_max_price,
+    max_price = forms.IntegerField(initial=Product.objects.get_max_price,
                                    widget=forms.NumberInput(attrs={'type': 'range',
-                                                                   'min': Product.get_min_price,
+                                                                   'min': Product.objects.get_min_price,
                                                                    'id': 'maxprice',
-                                                                   'max': Product.get_max_price,
+                                                                   'max': Product.objects.get_max_price,
                                                                    'oninput': 'printprice("maxprice")'}))
 
     search = forms.CharField(max_length=200, widget=forms.HiddenInput())
