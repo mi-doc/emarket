@@ -7,7 +7,7 @@
 
 ## General info
 Minimalistic online tablet store. 
-Provides most basic functionality for customers and staff. 
+Provides the most basic functionality for customers and staff. 
 This is a training project. 
 
 Deployed version: http://emarket-store.ru
@@ -20,13 +20,13 @@ Deployed version: http://emarket-store.ru
 - HTML, css
 - PostgreSQL
 - Nginx
-- Docker
+- Docker-compose
 
 ## Functionality 
 ###### Products
 - Viewing product cards on the main page
-- Filtering products by parameters, price
-- Searching products 
+- Filtering products by specs, price
+- Searching for products
 - Product detail page 
     - Viewing product images, expanded description
     - Comment section. Registered users are able to write comments and replies

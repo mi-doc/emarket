@@ -27,4 +27,4 @@ ENV PATH="/scripts:/py/bin:$PATH"
 
 COPY . /Emarket/
 
-# USER app
+USER app
