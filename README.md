@@ -10,7 +10,8 @@ Minimalistic online tablet store.
 Provides the most basic functionality for customers and staff. 
 This is a training project. 
 
-Deployed version: http://emarket-store.ru
+Deployed version: http://emarket-store.ru 
+(might not be available if server subscription has ended)
 
 ## Technologies
 - Python 3.8
@@ -35,7 +36,7 @@ Deployed version: http://emarket-store.ru
 - Adding/removing products in basket, changing quantity
 - Viewing products in basket list and on checkout page
 - Creating an order on the checkout page with customer data 
-- Viewing order status in profile page for registered users
+- Viewing order status in profile page (for signed in users)
 
 ###### Customers
 - Sign up and sign in
@@ -44,6 +45,11 @@ Deployed version: http://emarket-store.ru
     - Viewing list of user's orders with their statuses
 - Registered users are able to write comments on products and reply to other users
 - Contacts page with the possibility to send an email to admins
+
+###### Admin panel
+- Standatd django admin panel
+- Improved product admin page with the ability to see and modify
+specs, description, images, comments, discount and other data of a product on a single page
 
 ###### API
 - Allows requesting product list with pre-selected parameters to show 
